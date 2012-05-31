@@ -1,0 +1,8 @@
+python manage.py syncdb --settings=vlists.settings.dev
+
+django-admin.py validate --settings=vlists.settings.dev
+
+python manage.py runserver --settings=vlists.settings.dev
+
+# running with gunicorn
+gunicorn_django -b 0.0.0.0:8000 --settings=vlists.settings.dev
