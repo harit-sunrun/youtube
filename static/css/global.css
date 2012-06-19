@@ -1,0 +1,34 @@
+#slides {
+	position: relative;
+	display:block;
+	z-index:100;
+}
+
+.slides_container {
+    position:absolute;
+    z-index:2;
+}
+
+.slides_container a {
+/*	width:570px;*/
+	height:600px;
+	display:block;
+}
+
+/*
+	Next/prev buttons
+*/
+
+#slides .prev {
+    position:absolute;
+    left: 0;
+    top:45%;
+	z-index: 100;
+}
+
+#slides .next {
+    position:absolute;
+    right: 0;
+    top: 45%;
+	z-index: 100;
+}
