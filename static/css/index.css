@@ -1,0 +1,25 @@
+#login {
+	background-color: #cccc00;
+	height: 200px;
+	width: 400px;
+	float: right;
+	margin-top: 13.5%;
+}
+
+#show_container {
+	margin-right:400px;
+	background-color: white/*#ffffab*/;
+}
+
+#header, #footer {
+	margin: 0px;
+	padding: 0px;
+}
+
+#footer {
+	margin-left: 2%;
+}
+
+.buttons {
+	margin: 15px;
+}

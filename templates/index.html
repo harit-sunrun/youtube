@@ -1,16 +1,41 @@
-<html>
-	<title>Test!</title>
-	<body>
-		<ul>
-		  <li>
-		    <a href="{% url socialauth_begin 'twitter' %}">Enter using Twitter</a>
-		  </li>
-		  <li>
-		    <a href="{% url socialauth_begin 'google' %}">Enter using Google</a>
-		  </li>
-		  <li>
-		    <a href="{% url socialauth_begin 'facebook' %}">Enter using Facebook</a>
-		  </li>
-		</ul>
-	</body>
-</html>
+{% extends "base.html" %}
+
+{% block javascript %}
+	{{ block.super }}
+	<script type="text/javascript" src="../static/js/slides.js"></script>
+	<script type="text/javascript" src="../static/js/vlists.js"></script>
+{% endblock %}
+
+{% block css %}
+	{{ block.super }}
+	<link rel="stylesheet" href="../static/css/global.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="../static/css/zocial.css" type="text/css" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+{% block title %} 
+	Welcome to vlists! a better way to manage your playlists
+{% endblock %}
+
+{% block content %}
+	<div id="login">
+		<a class="zocial twitter buttons" href="{% url socialauth_begin 'twitter' %}">Sign in with Twitter</a>
+	    <a class="zocial google buttons" href="{% url socialauth_begin 'google' %}">Sign in with Google</a>
+		<a class="zocial facebook buttons" href="{% url socialauth_begin 'facebook' %}">Sign in with Facebook</a>
+	</div>
+	<div id="show_container">
+		<div id="slideshow">
+			<div id="slides">
+				<a href="#" class="prev"><img src="../static/img/arrow-prev.png" width="24" height="43" alt="Arrow Prev"></a>
+				<a href="#" class="next"><img src="../static/img/arrow-next.png" width="24" height="43" alt="Arrow Next"></a>
+				<div class="slides_container">
+					<div><img src="../static/img/slideshow/01.JPG"></div>
+					<div><img src="../static/img/slideshow/02.JPG"></div>
+					<div><img src="../static/img/slideshow/03.JPG"></div>
+					<div><img src="../static/img/slideshow/04.JPG"></div>
+					<div><img src="../static/img/slideshow/05.JPG"></div>
+					<div><img src="../static/img/slideshow/06.JPG"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
