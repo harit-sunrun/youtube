@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>{% block title %} {% endblock %}</title>
+		<meta name="generator" content="TextMate http://macromates.com/">
+		<meta name="author" content="Harit Himanshu">
+		
+		{% block javascript %}
+			<script type="text/javascript" src="../static/js/jquery.js"></script>
+			<script type="text/javascript" src="../static/js/bootstrap.js"></script>
+		{% endblock %}
+		
+		{% block css %}
+			<link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" media="screen" title="no title" charset="utf-8">
+			<link rel="stylesheet" href="../static/css/index.css" type="text/css" media="screen" title="no title" charset="utf-8">		
+	 	{% endblock %}
+		<!-- Date: 2012-06-13 -->
+	</head>
+	<body style="margin: 0px"> <!-- firefox doesn't takes these settings from css somehow -->
+		<div id="header" class="navbar">
+			<div class="navbar-inner">
+				<a id="logo" href="#" class="brand">vLists</a>
+				<div class="container">
+					<ul class="nav">
+						<li class="active">
+							<a href="#">Home</a>
+						</li>
+						<li>
+							<a href="#">About</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="content" class="container-fluid">
+			{% block content %} {% endblock %}
+		</div>
+		<div id="footer" class="navbar">
+			<p> a better way to manage your video playlists </p>
+		</div>
+	</body>
+</html>

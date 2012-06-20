@@ -98,6 +98,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'vlists',
+	'vlists.apps.playlists',
+	'vlists.apps.videos',
+	'vlists.apps.accounts',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
