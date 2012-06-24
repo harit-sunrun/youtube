@@ -1,0 +1,60 @@
+.feature {
+	margin-left: 760px;
+	background-color: #e6e600;
+}
+
+#navigator {
+	width: 120px;
+	float: left;
+/*	background-color: #cccc00;*/
+	background-color: white;
+}
+
+#player {
+	width: 640px;
+	float: left;
+	background-color: #b3b300;
+}
+
+#video {
+	margin-top: 20px;
+	text-align: center;
+}
+
+#feature, #navigator, #player {
+	height: 700px;
+}
+
+#result {
+	display: none;
+	height: 651px;
+	overflow: scroll;
+}
+
+.tab-style {
+	width: 150px;
+	height: 42px;
+	background-color: #ffff00;
+}
+
+.navigator-icons {
+	font-size: 15px;
+}
+
+.navigator-class {
+	margin-top: 5%;
+}
+
+.navigator-button {
+	border: none;
+}
+
+.hide-item {
+	display: none;
+}
+
+.view-item {
+	display: block;
+	height: 120px;
+	margin-left: 1%;
+}

@@ -26,6 +26,13 @@ server {
             expires max;
         }
     }
+	location /templates/ {
+		alias /Users/hhimanshu/code/p/vlists/vlists/templates/;
+        # if asset versioning is used
+        if ($query_string) {
+            expires max;
+        }
+    }
     location / {
         proxy_pass_header http://127.0.0.1:8000/;
         proxy_set_header Host $http_host;
