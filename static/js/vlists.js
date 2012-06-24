@@ -17,8 +17,6 @@ API source : https://developers.google.com/youtube/2.0/developers_guide_jsonc
 */
 $(function(){
 	$('#search-input').live('keyup',function() {
-		// alert('hi');
-
 		var search_input = $(this).val();
 		var keyword = encodeURIComponent(search_input);
 		var yt_url = 'http://gdata.youtube.com/feeds/api/videos?q='+keyword+'&format=5&max-results=10&v=2&alt=jsonc';
@@ -42,32 +40,42 @@ $(function(){
 						'views': data.viewCount,
 						'thumbnail': data.thumbnail['sqDefault'],
 					}
-					video_result_template(search_data);
+					item = video_result_template(search_data);
+					$('#result').append(item).fadeIn('slow');
 				});
 			} else {
-				var template = $('#item').clone();
-                $('#result').html(template);
+
 			}
 		  },
 		  error: function(xhr, textStatus, errorThrown) {
 		    //called when there is an error
 		  }
 		});
-		
 	});
 });
 
+// filling out the search template
 function video_result_template(data) {
 	var item = $('#item').clone();
+	item.removeClass('hide-item');
 	item.find('img').attr('src', data.thumbnail);
     item.find('.title').html(data.title);
     item.find('.views').html(data.views);
-	item.find('#id').attr('id', data.id);
-	
-	item.removeClass('hide-item');
+	item.attr('id', data.id);
 	item.addClass('view-item');
-	$('#result').append(item).fadeIn(); // slow/fast?
+	return item;
 }
+
+// playing the video from search result on player pane
+$(function(){
+	$('.item').live('click', function(){
+		// alert(this.id);
+		console.log($(this));
+		var url = $('#video-frame').attr('src');
+		var new_url = url.replace(/embed\/[\w -]*/g, 'embed/' + this.id);
+		$('#video-frame').attr('src', new_url);
+	});
+});
 
 // animating slideshow on landing page
 $(function(){
