@@ -31,10 +31,18 @@
 	overflow: scroll;
 }
 
+/*#video-detail {
+	float: left;
+}
+*/
 .tab-style {
 	width: 150px;
 	height: 42px;
 	background-color: #ffff00;
+}
+
+.position-list-in-button {
+	margin-top: 1%;
 }
 
 .navigator-icons {
@@ -57,4 +65,8 @@
 	display: block;
 	height: 120px;
 	margin-left: 1%;
+}
+
+.icon-in-button {
+	margin-top: 2%;
 }
