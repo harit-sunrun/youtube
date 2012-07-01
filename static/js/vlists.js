@@ -68,6 +68,12 @@ function video_result_template(data) {
 
 // playing the video from search result on player pane
 $(function(){
+	$('#add-to-list-button').live('click', function(){
+		alert('clicked');
+	});
+});
+
+$(function(){
 	$('.item').live('click', function(){
 		// alert(this.id);
 		console.log($(this));
@@ -75,6 +81,14 @@ $(function(){
 		var new_url = url.replace(/embed\/[\w -]*/g, 'embed/' + this.id);
 		$('#video-frame').attr('src', new_url);
 	});
+});
+
+// creating new playlist
+$(function() {
+    $('form input[type="text"]').live('keyup', function() {
+        var val = $.trim(this.value);
+        $('form .create-playlist-button').prop('disabled', val.length == 0);
+    });
 });
 
 // animating slideshow on landing page

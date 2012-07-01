@@ -20,11 +20,14 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li>
-						<a href="#">here</a>
+						<form class="new-playlist form-inline" onclick="event.stopPropagation()">
+						  <input type="text" class="input-small">
+						  <button class="btn btn-danger create-playlist-button" type="submit" disabled="disabled">New</button>
+						</form>
 					</li>
-			
+					<li class="divider"/>
 					<li>
-						<a href="#">new</a>
+						<a href="#">here</a>
 					</li>
 				</ul>
 			</div>
