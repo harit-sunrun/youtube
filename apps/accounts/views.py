@@ -5,6 +5,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib.messages.api import get_messages
 from social_auth import __version__ as version
+from django.db import transaction
 
 import logging
 
@@ -16,7 +17,7 @@ def home(request):
         return render_to_response('index.html', {'version': version},
                                   RequestContext(request))
 
-@login_required
+@login_required()
 def done(request):
 	"""Login complete view, displays user data"""
 	ctx = {
@@ -24,6 +25,15 @@ def done(request):
 		'last_login': request.session.get('social_auth_last_login_backend')
 	}
 	logging.warn('context - ' + str(ctx))
-	logging.warn('request - ' + str(request))
-	logging.warn('user - ' + str(request.user))
+	# logging.warn('request - ' + str(request))
+	# logging.warn('class - ' + str(request.user.__class__))
+	logging.warn('user - ' + str(dir(request.user)))
 	return render_to_response('home.html', ctx, RequestContext(request))
+
+@login_required()
+@transaction.commit_on_success
+def addVideo(video):
+	"""
+	adds video to user playlist
+	"""
+	pass

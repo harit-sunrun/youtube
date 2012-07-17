@@ -10,3 +10,7 @@ gunicorn_django -b 0.0.0.0:8000 --settings=vlists.settings.dev --debug --log-lev
 # nginx
 sudo nginx # start
 sudo nginx -s stop # stop
+/usr/local/conf/nginx.conf # conf file
+
+# test
+python manage.py test videos --settings=vlists.settings.dev

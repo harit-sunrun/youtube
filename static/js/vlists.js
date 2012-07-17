@@ -1,5 +1,5 @@
 // loading search page
-$(function(){
+$(function () {
   $("#search").click(function() {
     $("#feature").load("templates/search.html", function() {
         $("#search-input").focus();
@@ -33,7 +33,7 @@ $(function(){
 				var template = $('#item').clone();
                 $('#result').html(template);
 				$.each(response.data.items, function(i, data) {
-					console.log(data)
+					//console.log(data)
 					search_data = {
 						'id': data.id,
 						'title': data.title,
@@ -68,15 +68,8 @@ function video_result_template(data) {
 
 // playing the video from search result on player pane
 $(function(){
-	$('#add-to-list-button').live('click', function(){
-		alert('clicked');
-	});
-});
-
-$(function(){
 	$('.item').live('click', function(){
 		// alert(this.id);
-		console.log($(this));
 		var url = $('#video-frame').attr('src');
 		var new_url = url.replace(/embed\/[\w -]*/g, 'embed/' + this.id);
 		$('#video-frame').attr('src', new_url);
@@ -85,9 +78,23 @@ $(function(){
 
 // creating new playlist
 $(function() {
+    // activate "New" buttons if input is not empty
     $('form input[type="text"]').live('keyup', function() {
         var val = $.trim(this.value);
-        $('form .create-playlist-button').prop('disabled', val.length == 0);
+        $(this).next("button").prop('disabled', val.length === 0);
+    });
+
+    $("body").on("submit","form",function(e){
+        // do not submit the form
+        e.preventDefault();
+
+        // handle everything yourself
+        var $form = $(this);
+        var title = $form.closest('.video-detail').find('.title').text();
+        var entryTitle = $form.find('.input-small').val();
+        console.debug(title);
+        console.debug(entryTitle);
+        // send the data to the server using .ajax() or .post()
     });
 });
 
