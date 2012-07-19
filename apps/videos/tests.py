@@ -1,6 +1,5 @@
 from django.test import TestCase
 from models import Video
-import unittest
 
 # Reference: http://stackoverflow.com/questions/2533457/how-to-setup-and-teardown-temporary-django-db-for-unit-testing
 

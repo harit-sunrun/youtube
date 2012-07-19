@@ -1,26 +1,17 @@
 from django.db import models
 from vlists.apps.videos.models import Video
 from django.contrib.auth.models import User
+import logging
+logging.getLogger().setLevel(logging.INFO)
 
 class PlaylistManager(models.Manager):
-	"""
-	This class will be responsible for following tasks
-	a.) add video to playlist
-	b.) get video(s) for playlist
-	c.) create new playlist
-	d.) deletes existing playlist
-	e.) updates existing playlist name
-	Note: All of these functions require a user to perform these operations
-	"""
-	def addVideoToPlaylist(user, video):
-		if not (user and video):
-			raise ValueError('User or Video information is missing')
-		"""
-		- get/create video
-		- get/create playlistVideo
-		- get/create playlist
-		- get/create userPlaylist
-		"""
+	def add_playlist(self, name):
+		playlist = Playlist(name=name)
+		playlist.save()
+		return playlist
+	
+	def get_playlist_with_id(self, id):
+		return super(PlaylistManager, self).get_query_set().filter(pk=id)
 
 class Playlist(models.Model):
 	name = models.CharField(max_length=30)
@@ -29,30 +20,63 @@ class Playlist(models.Model):
 	deleted = models.BooleanField(default=False)
 	objects = PlaylistManager() # is a customer manager
 	
+	def __repr__(self):
+		return '<Playlist name:%s, date_created:%s, deleted:%s>' % \
+				(self.name, self.date_created, self.deleted)
+	
 	class Meta:
 		db_table = 'playlists'
 	
+
+class PlaylistVideoManager(models.Manager):
+	#def add_video_to_playlist(self, video, playlist):
+	pass
+
 class PlaylistVideo(models.Model):
 	playlist = models.ForeignKey(Playlist)
 	video = models.ForeignKey(Video)
+	objects = PlaylistVideoManager()
 	
 	class Meta:
 		db_table = 'playlists_videos'
+
+class UserPlaylistManager(models.Manager):
+	def get_or_create_playlist_for_user(self, user, playlist_name):
+		# check if the playlist already exists for the user
+		playlist = self.get_playlist_for_user_with_name(user, playlist_name)
+		if not playlist:
+			playlist = Playlist.objects.add_playlist(playlist_name)
+			user_playlist = UserPlaylist(user=user, playlist=playlist)
+			user_playlist.save()
+			logging.info('playlist created: %s, %s' % (repr(playlist), repr(user)))
+		else:
+			logging.info('Playlist already exists: %s, %s' % (repr(playlist), repr(user)))
+		return playlist
+
+	def get_all_playlists_for_user(self, user):
+		all_user_playlists = super(UserPlaylistManager, self).get_query_set().filter(user=user)
+		# print type(all_user_playlists)
+		playlists = []
+		if all_user_playlists:
+			for user_playlist in all_user_playlists:
+				playlists.append(user_playlist.playlist)
+		return playlists
+		
+	def get_playlist_for_user_with_name(self, user, playlist_name):
+		all_user_playlists = self.get_all_playlists_for_user(user)
+		print all_user_playlists
+		if all_user_playlists:
+			for playlist in all_user_playlists:
+				if playlist.name == playlist_name:
+					return playlist
 		
 class UserPlaylist(models.Model):
 	user = models.ForeignKey(User)
 	playlist = models.ForeignKey(Playlist)
+	objects = UserPlaylistManager()
 	
+	def __repr__(self):
+		return '<UserPlaylist id: %s> # <user id: %s> # <playlist id: %s>' % (self.id, self.user.id, self.playlist.id)
+		
 	class Meta:
 		db_table = 'user_playlists'
-		
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
