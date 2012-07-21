@@ -21,16 +21,40 @@ class Playlist(models.Model):
 	objects = PlaylistManager() # is a customer manager
 	
 	def __repr__(self):
-		return '<Playlist name:%s, date_created:%s, deleted:%s>' % \
-				(self.name, self.date_created, self.deleted)
+		return '<Playlist id:%s, name:%s, date_created:%s, deleted:%s>' % \
+				(self.id, self.name, self.date_created, self.deleted)
 	
 	class Meta:
 		db_table = 'playlists'
 	
 
 class PlaylistVideoManager(models.Manager):
-	#def add_video_to_playlist(self, video, playlist):
-	pass
+	def add_video_to_playlist(self, video, playlist):
+		"""
+		if video is already added to playlist, don't add it again
+		"""
+		search_video = self.get_video_for_playlist(playlist, video)
+		if search_video:
+			logging.info('video is already added to playlist, will not re-add - ' + repr(playlist) + ', ' + repr(video))
+		else:
+			playlist_video = PlaylistVideo(video=video, playlist=playlist)
+			playlist_video.save()
+		return video
+	
+	def get_all_videos_for_playlist(self, playlist):
+		videos_queryset = self.get_query_set().filter(playlist=playlist)
+		videos = []
+		if videos_queryset:
+			for video in videos_queryset:
+				videos.append(video)
+		return videos
+	
+	def get_video_for_playlist(self, playlist, video):
+		all_videos = self.get_all_videos_for_playlist(playlist)
+		if all_videos:
+			for vid in all_videos:
+				if vid.pk == video.pk:
+					return video	
 
 class PlaylistVideo(models.Model):
 	playlist = models.ForeignKey(Playlist)
@@ -64,7 +88,6 @@ class UserPlaylistManager(models.Manager):
 		
 	def get_playlist_for_user_with_name(self, user, playlist_name):
 		all_user_playlists = self.get_all_playlists_for_user(user)
-		print all_user_playlists
 		if all_user_playlists:
 			for playlist in all_user_playlists:
 				if playlist.name == playlist_name:
