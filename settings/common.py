@@ -82,6 +82,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+	# -- db transaction management -- #
+	'django.middleware.cache.UpdateCacheMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -137,3 +143,4 @@ LOGGING = {
     }
 }
 
+LOGIN_URL="/"

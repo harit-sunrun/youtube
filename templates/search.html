@@ -7,9 +7,36 @@
 		<div style="float:left">
 			<img class="thumbnail" src="" alt="" />
 		</div>
-		<div id="name">
+		<div class="video-detail">
 			<p class="title"></p>
 			<p class="views"></p>
+
+		<div class="btn-toolbar">
+			<div class="btn-group" style="display:inline-block;">
+				<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
+					<i class="icon-list icon-in-button"></i>  
+					Add to playlist
+					<span class="caret"/>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<form class="new-playlist form-inline" onclick="event.stopPropagation()">
+						  <input type="text" class="input-small">
+						  <button class="btn btn-danger create-playlist-button" type="submit" disabled="disabled">New</button>
+						</form>
+					</li>
+					<li class="divider"/>
+					<li>
+						<a href="#">here</a>
+					</li>
+				</ul>
+			</div>
+			<div class="btn-group">
+				<button class="btn btn-info">
+					<i class="icon-paper-clip icon-in-button"></i>  
+					Queue
+				</button>
+			</div>
 		</div>
 	</div>
 </div>
