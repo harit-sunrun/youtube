@@ -10,3 +10,19 @@ gunicorn_django -b 0.0.0.0:8000 --settings=vlists.settings.dev --debug --log-lev
 # nginx
 sudo nginx # start
 sudo nginx -s stop # stop
+/usr/local/conf/nginx.conf # conf file
+tail -f /opt/django/logs/nginx/vc_access.log # log
+
+# test
+python manage.py test videos --settings=vlists.settings.dev
+
+
+# Examples:
+# url(r'^$', 'vlists.views.home', name='home'),
+# url(r'^vlists/', include('vlists.foo.urls')),
+
+# Uncomment the admin/doc line below to enable admin documentation:
+# url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+# Uncomment the next line to enable the admin:
+# url(r'^admin/', include(admin.site.urls)),
