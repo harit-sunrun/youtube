@@ -1,6 +1,7 @@
 from django.db import models
 
 import logging
+logging.getLogger().setLevel(logging.INFO)
 
 class VideoManager(models.Manager):	
 	def get_video(self, url):
@@ -13,8 +14,11 @@ class VideoManager(models.Manager):
 		video = self.get_video(url)
 		if not video:
 			video = Video(title=title, url=url)
-			logging.info('adding video title - ' + title + ', url - ' + url)
 			video.save()
+			logging.info('video added - ' + repr(video))
+		else:
+			video = video[0]
+			logging.info('video already added - ' + repr(video))
 		return video
 		
 class Video(models.Model):

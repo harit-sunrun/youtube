@@ -37,7 +37,7 @@ class PlaylistVideoManager(models.Manager):
 		if search_video:
 			logging.info('video is already added to playlist, will not re-add - ' + repr(playlist) + ', ' + repr(video))
 		else:
-			playlist_video = PlaylistVideo(video=video, playlist=playlist)
+			playlist_video = PlaylistVideo(playlist=playlist, video=video)
 			playlist_video.save()
 		return video
 	

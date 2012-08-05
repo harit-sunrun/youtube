@@ -20,14 +20,14 @@ server {
         root /path/to/test/lib/python2.7/site-packages/django/contrib;
     }
     location /static/ {
-		alias /Users/hhimanshu/code/p/vlists/vlists/static/;
+		alias /Users/hhimanshu/code/p/python/vlists/vlists/static/;
         # if asset versioning is used
         if ($query_string) {
             expires max;
         }
     }
 	location /templates/ {
-		alias /Users/hhimanshu/code/p/vlists/vlists/templates/;
+		alias /Users/hhimanshu/code/p/python/vlists/vlists/templates/;
         # if asset versioning is used
         if ($query_string) {
             expires max;

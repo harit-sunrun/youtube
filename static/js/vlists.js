@@ -76,6 +76,31 @@ $(function(){
 	});
 });
 
+// setting up ajaxSetup
+$.ajaxSetup({ 
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                 if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                     cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                     break;
+                 }
+             }
+         }
+         return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     } 
+});
+
 // creating new playlist
 $(function() {
     // activate "New" buttons if input is not empty
@@ -91,10 +116,25 @@ $(function() {
         // handle everything yourself
         var $form = $(this);
         var title = $form.closest('.video-detail').find('.title').text();
-        var entryTitle = $form.find('.input-small').val();
+        var id = $form.closest('.item').attr('id');
+        var playlist = $form.find('.input-small').val();
         console.debug(title);
-        console.debug(entryTitle);
+        console.debug(playlist);
+		console.debug(id);
+
         // send the data to the server using .ajax() or .post()
+		$.ajax({
+			type: 'POST',
+			url: 'addVideo',
+			data: {
+				video_title: title,
+				playlist_name: playlist,
+				url: id
+				// csrfmiddlewaretoken: '{{ csrf_token }}'
+				},
+		}).done(function(){
+			alert('done');
+		});
     });
 });
 
