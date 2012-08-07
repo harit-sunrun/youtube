@@ -39,6 +39,7 @@ class PlaylistVideoManager(models.Manager):
 		else:
 			playlist_video = PlaylistVideo(playlist=playlist, video=video)
 			playlist_video.save()
+			logging.info('video added to playlist - ' + repr(playlist) + ', ' + repr(video))
 		return video
 	
 	def get_all_videos_for_playlist(self, playlist):
