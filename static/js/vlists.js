@@ -130,13 +130,30 @@ $(function() {
 				video_title: title,
 				playlist_name: playlist,
 				url: id
-				// csrfmiddlewaretoken: '{{ csrf_token }}'
-				},
-		}).done(function(){
-			alert('done');
+				// csrfmiddlewaretoken: '{{ csrf_token }}',
+			},
+			success: function(response, textStatus, jqXHR){
+				 bootstrap_alert.success('video saved successfully');
+			},
+            
+			// callback handler that will be called on error
+      		error: function(jqXHR, textStatus, errorThrown){
+				bootstrap_alert.error('There were some errors while saving the video. Please try in a while');
+			},
 		});
     });
 });
+
+// setting up alerts on action
+bootstrap_alert = function() {}
+bootstrap_alert.success = function(message) {
+  $('#feature').prepend('<div id="alert" class="alert alert-success"><!--a class="close" data-dismiss="alert">×</a--><span>'+message+'</span></div>');
+  $('#alert').fadeOut(3000);
+}
+bootstrap_alert.error = function(message) {
+  $('#feature').prepend('<div id="alert" class="alert alert-error"><!--a class="close" data-dismiss="alert">×</a--><span>'+message+'</span></div>');
+  $('#alert').fadeOut(3000);
+}
 
 // animating slideshow on landing page
 $(function(){
