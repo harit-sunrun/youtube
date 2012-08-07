@@ -147,12 +147,14 @@ $(function() {
 // setting up alerts on action
 bootstrap_alert = function() {}
 bootstrap_alert.success = function(message) {
-  $('#feature').prepend('<div id="alert" class="alert alert-success"><!--a class="close" data-dismiss="alert">×</a--><span>'+message+'</span></div>');
-  $('#alert').fadeOut(3000);
+  	var div = $('<div id="alert" class="alert alert-success"><!--a class="close" data-dismiss="alert">×</a--><span>'+message+'</span></div>');
+  	$('#feature').prepend(div);
+  	div.slideDown(500).delay(2000).slideUp(500);
 }
 bootstrap_alert.error = function(message) {
-  $('#feature').prepend('<div id="alert" class="alert alert-error"><!--a class="close" data-dismiss="alert">×</a--><span>'+message+'</span></div>');
-  $('#alert').fadeOut(3000);
+	var div = $('<div id="alert" class="alert alert-error"><!--a class="close" data-dismiss="alert">×</a--><span>'+message+'</span></div>');
+  	$('#feature').prepend(div);
+  	div.slideDown(500).delay(2000).slideUp(500);
 }
 
 // animating slideshow on landing page
