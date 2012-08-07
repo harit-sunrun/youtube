@@ -54,7 +54,6 @@ def addVideo(request):
 	
 	# get video
 	video = Video.objects.get_or_create_video(title=video_title, url=url)
-	print type(video)
 	
 	# add video to playlist
 	PlaylistVideo.objects.add_video_to_playlist(video, playlist) # returns the video
