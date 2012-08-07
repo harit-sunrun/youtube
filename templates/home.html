@@ -8,12 +8,15 @@
 	{{ block.super }}
 	<script type="text/javascript" src="/static/js/vlists.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap-dropdown.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap-alert.js"></script>
+	<script type="text/javascript" src="/static/js/notify-osd.js"></script>
 {% endblock %}
 
 {% block css %}
 	{{ block.super }}
 	<link rel="stylesheet" href="/static/css/container.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="/static/css/font-awesome.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="/static/css/notify-osd.css" type="text/css" media="screen" title="no title" charset="utf-8">
 {% endblock %}
 
 {% block content %}
@@ -48,6 +51,9 @@
 	</div>
 	
 	<div id="feature" class="feature">
+		<!--div id="alerts"></div-->
+		<!--div id="feature" class="feature">
+		</div-->
 		I will hold all app related features
 	</div>
 {% endblock %}
