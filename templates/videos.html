@@ -1,0 +1,8 @@
+{% for video in videos %}
+	<div class="video">
+		<p> {{ video.title }} </p>
+		<p> {{ video.url }} </p>
+	</div>
+{% empty %}
+	<p> strange, how come you don't have any videos? </p>
+{% endfor %}

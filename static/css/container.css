@@ -80,3 +80,14 @@
 	margin-left: 3%;
 	margin-bottom: 3%;
 }
+
+.playlist {
+	height: 60px;
+	background-color: #e8e8b5;
+	font-size: 20px;
+	padding-top: 6%;
+}
+
+.playlist .icon-chevron-right {
+	padding-top: 1.6%;
+}
