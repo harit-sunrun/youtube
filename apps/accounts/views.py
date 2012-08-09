@@ -1,4 +1,5 @@
 from django.http import HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -13,6 +14,7 @@ from vlists.apps.playlists.models import PlaylistVideo
 from vlists.apps.videos.models import Video
 
 import logging
+import json
 logging.getLogger().setLevel(logging.INFO)
 
 def home(request):
@@ -30,10 +32,10 @@ def done(request):
 		'version': version,
 		'last_login': request.session.get('social_auth_last_login_backend')
 	}
-	logging.warn('context - ' + str(ctx))
+	# logging.info('context - ' + str(ctx))
 	# logging.warn('request - ' + str(request))
 	# logging.warn('class - ' + str(request.user.__class__))
-	logging.warn('user - ' + str(dir(request.user)))
+	# logging.info('user - ' + str(dir(request.user)))
 	return render_to_response('home.html', ctx, RequestContext(request))
 
 @csrf_exempt
@@ -59,3 +61,26 @@ def addVideo(request):
 	PlaylistVideo.objects.add_video_to_playlist(video, playlist) # returns the video
 
 	return render_to_response('home.html', 'added!')
+
+@csrf_exempt
+@login_required
+def get_playlists_for_user(request):
+	"""
+	gets all playlists for user
+	"""
+	logging.info('getting playlist for user - ' + str(request.user))
+	playlists = UserPlaylist.objects.get_all_playlists_for_user(request.user)
+	logging.info('user=%s, playlists=%s'%(request.user, playlists))
+	return render_to_response('playlists.html', {'playlists': playlists})
+
+@csrf_exempt
+@login_required
+def get_videos_for_playlist(request):
+	"""
+	given a user playlist name return all videos added in that playlist 
+	"""
+	playlist_name = request.POST['playlist']
+	playlist = UserPlaylist.objects.get_playlist_for_user_with_name(request.user, playlist_name)
+	videos = PlaylistVideo.objects.get_all_videos_for_playlist(playlist)
+	logging.info('returning videos: user=%s, playlist=%s, videos=%s'%(request.user, playlist_name, videos))
+	return render_to_response('videos.html', {'videos': videos})

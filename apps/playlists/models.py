@@ -43,11 +43,11 @@ class PlaylistVideoManager(models.Manager):
 		return video
 	
 	def get_all_videos_for_playlist(self, playlist):
-		videos_queryset = self.get_query_set().filter(playlist=playlist)
+		playlist_videos_queryset = self.get_query_set().filter(playlist=playlist)
 		videos = []
-		if videos_queryset:
-			for video in videos_queryset:
-				videos.append(video)
+		if playlist_videos_queryset:
+			for playlist_video in playlist_videos_queryset:
+				videos.append(playlist_video.video)
 		return videos
 	
 	def get_video_for_playlist(self, playlist, video):

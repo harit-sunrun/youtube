@@ -1,0 +1,8 @@
+{% for playlist in playlists %}
+   <div class="playlist" id='{{ playlist.name }}'>
+  		 {{ playlist.name }} <i class="icon-chevron-right icon-large"></i>
+   </div>
+   <br />
+{% empty %}
+    <p>you have no playlists, start creating one!</p>
+{% endfor %}
