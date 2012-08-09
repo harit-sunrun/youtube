@@ -157,6 +157,46 @@ bootstrap_alert.error = function(message) {
   	div.slideDown(500).delay(2000).slideUp(500);
 }
 
+// getting playlists for user
+$(function(){
+	$('#playlist').click(function(){
+		$.ajax({
+			url: '/getUserPlaylists',
+			success: function(response, textStatus, jqXHR){
+				// console.log(response);
+				$('#feature').empty().append(response);
+			},
+			error: function(response, textStatus, jqXHR) {
+				bootstrap_alert.error('error in receving playlists');
+			}
+		});
+	});
+});
+
+// getting videos for playlists
+$(function(){
+	$('body').on('click', '.playlist', function(event) {
+		div = $(this);
+		var playlist = div.attr('id');
+		// alert('getting the videos for ' + playlist);
+		$.ajax({
+		  url: '/getVideos',
+		  type: 'POST',
+		  data: {'playlist': playlist},
+		  complete: function(xhr, textStatus) {
+		    //called when complete
+		  },
+		  success: function(response, textStatus, jqXHR) {
+		    console.log(response);
+			$('#feature').empty().append(response);
+		  },
+		  error: function(response, textStatus, jqXHR) {
+		    bootstrap_alert.error('There were some errors while getting your videos, please try in a while');
+		  }
+		});
+	});
+});
+
 // animating slideshow on landing page
 $(function(){
 	$('#slides').slides({
