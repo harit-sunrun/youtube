@@ -187,13 +187,31 @@ $(function(){
 		    //called when complete
 		  },
 		  success: function(response, textStatus, jqXHR) {
-		    console.log(response);
+		    // console.log(response);
 			$('#feature').empty().append(response);
 		  },
 		  error: function(response, textStatus, jqXHR) {
 		    bootstrap_alert.error('There were some errors while getting your videos, please try in a while');
 		  }
 		});
+	});
+});
+
+// queue-ing videos
+$(function(){
+	$('body').on('click', '.video', function(event) {
+		var title = $(this).children('.title').text();
+		var url = $(this).children('.url').text();
+		video = {'title': title, 'url': url};
+		console.log('video - ' + JSON.stringify(video));
+		var queue = [];
+		if (localStorage['queue'] != null) {
+			queue = JSON.parse(localStorage['queue']);
+		}
+		queue.push(video);
+		localStorage['queue'] = JSON.stringify(queue);
+		console.log(localStorage.getItem('queue'));
+	 	bootstrap_alert.success('queued!');
 	});
 });
 
