@@ -81,8 +81,8 @@
 	margin-bottom: 3%;
 }
 
-.playlist {
-	height: 60px;
+.playlist, .video {
+	height: 70px;
 	background-color: #e8e8b5;
 	font-size: 20px;
 	padding-top: 6%;

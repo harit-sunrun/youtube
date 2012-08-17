@@ -1,8 +1,10 @@
 {% for video in videos %}
 	<div class="video">
-		<p> {{ video.title }} </p>
-		<p> {{ video.url }} </p>
+		<p class='title'> {{ video.title }} </p>
+		<p class='url'> {{ video.url }} </p> 
+		<button class="btn btn-primary queue" href="#">queue</button>
 	</div>
+	<br />
 {% empty %}
 	<p> strange, how come you don't have any videos? </p>
 {% endfor %}
