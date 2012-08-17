@@ -117,10 +117,13 @@ $(function() {
         var $form = $(this);
         var title = $form.closest('.video-detail').find('.title').text();
         var id = $form.closest('.item').attr('id');
+		var thumbnail = $form.closest('.item').find('.thumbnail').attr('src');
         var playlist = $form.find('.input-small').val();
-        console.debug(title);
-        console.debug(playlist);
-		console.debug(id);
+
+		// console.debug(thumbnail);
+        // console.debug(title);
+        // console.debug(playlist);
+		// console.debug(id);
 
         // send the data to the server using .ajax() or .post()
 		$.ajax({
@@ -129,7 +132,8 @@ $(function() {
 			data: {
 				video_title: title,
 				playlist_name: playlist,
-				url: id
+				url: id,
+				thumbnail: thumbnail
 				// csrfmiddlewaretoken: '{{ csrf_token }}',
 			},
 			success: function(response, textStatus, jqXHR){
@@ -212,7 +216,7 @@ $(function(){
 		  success: function(data, textStatus, xhr) {
 			for (var i = 0; i < data.length; i++) {
 				// console.log(data[i].fields['title']);
-				addToQueue(data[i].fields['title'], data[i].fields['url']);
+				addToQueue(data[i].fields['title'], data[i].fields['url'], data[i].fields['thumbnail']);
 			}
 			bootstrap_alert.success('queued all videos');
 		  },
@@ -225,8 +229,8 @@ $(function(){
 });
 
 // adding to localStorage
-function addToQueue(title, url) {
-	video = {'title': title, 'url': url};
+function addToQueue(title, url, thumbnail) {
+	video = {'title': title, 'url': url, 'thumbnail': thumbnail};
 	var queue = [];
 	if (localStorage['queue'] != null) {
 		queue = JSON.parse(localStorage['queue']);
@@ -241,7 +245,8 @@ $(function(){
 	$('body').on('click', '.video', function(event) {
 		var title = $(this).children('.title').text();
 		var url = $(this).children('.url').text();
-		addToQueue(title, url);
+		var thumbnail = $(this).find('img').attr('src');
+		addToQueue(title, url, thumbnail);
 		// video = {'title': title, 'url': url};
 		// console.log('video - ' + JSON.stringify(video));
 		// var queue = [];

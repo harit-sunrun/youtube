@@ -10,10 +10,10 @@ class VideoManager(models.Manager):
 	"""
 	- gets/creates a video
 	"""
-	def get_or_create_video(self, title, url):
+	def get_or_create_video(self, title, url, thumbnail):
 		video = self.get_video(url)
 		if not video:
-			video = Video(title=title, url=url)
+			video = Video(title=title, url=url, thumbnail=thumbnail)
 			video.save()
 			logging.info('video added - ' + repr(video))
 		else:
@@ -24,6 +24,7 @@ class VideoManager(models.Manager):
 class Video(models.Model):
 	title = models.CharField(max_length=100)
 	url = models.URLField(max_length=200)
+	thumbnail = models.URLField()
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_modified = models.DateTimeField(auto_now=True)	
 	objects = VideoManager() # is a customer manager
