@@ -1,6 +1,8 @@
 {% for playlist in playlists %}
    <div class="playlist" id='{{ playlist.name }}'>
-  		 {{ playlist.name }} <i class="icon-chevron-right icon-large"></i>
+  		 {{ playlist.name }} 
+		<button class="btn btn-primary queueAll" href="#">queue all</button> 
+        <i class="icon-chevron-right icon-large"></i>
    </div>
    <br />
 {% empty %}
