@@ -50,13 +50,14 @@ def addVideo(request):
 	playlist_name = request.POST['playlist_name']
 	url = request.POST['url']
 	video_title = request.POST['video_title']
+	thumbnail = request.POST['thumbnail']
 	
 	logging.info('add Video request for user=%s,  playlist=%s, url=%s' % (user, playlist_name, url))
 	# get user playlist with name
 	playlist = UserPlaylist.objects.get_or_create_playlist_for_user(user, playlist_name)
 	
 	# get video
-	video = Video.objects.get_or_create_video(title=video_title, url=url)
+	video = Video.objects.get_or_create_video(title=video_title, url=url, thumbnail=thumbnail)
 	
 	# add video to playlist
 	PlaylistVideo.objects.add_video_to_playlist(video, playlist) # returns the video
