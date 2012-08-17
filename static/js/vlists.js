@@ -197,20 +197,60 @@ $(function(){
 	});
 });
 
+// queue all playlist videos
+$(function(){
+	$('body').on('click', '.queueAll', function(e) {
+		var playlist = $(this).closest('.playlist').attr('id');
+		e.stopPropagation();
+		$.ajax({
+		  url: '/queuePlaylistVideos',
+		  type: 'POST',
+		  data: {'playlist': playlist},
+		  complete: function(xhr, textStatus) {
+		    //called when complete
+		  },
+		  success: function(data, textStatus, xhr) {
+			for (var i = 0; i < data.length; i++) {
+				// console.log(data[i].fields['title']);
+				addToQueue(data[i].fields['title'], data[i].fields['url']);
+			}
+			bootstrap_alert.success('queued all videos');
+		  },
+		  error: function(xhr, textStatus, errorThrown) {
+		    bootstrap_alert.error('Error while queueing the videos, please try in a while');
+		  }
+		});
+		
+	});
+});
+
+// adding to localStorage
+function addToQueue(title, url) {
+	video = {'title': title, 'url': url};
+	var queue = [];
+	if (localStorage['queue'] != null) {
+		queue = JSON.parse(localStorage['queue']);
+	}
+	queue.push(video);
+	localStorage['queue'] = JSON.stringify(queue);
+	console.log(localStorage.getItem('queue'));
+}
+
 // queue-ing videos
 $(function(){
 	$('body').on('click', '.video', function(event) {
 		var title = $(this).children('.title').text();
 		var url = $(this).children('.url').text();
-		video = {'title': title, 'url': url};
-		console.log('video - ' + JSON.stringify(video));
-		var queue = [];
-		if (localStorage['queue'] != null) {
-			queue = JSON.parse(localStorage['queue']);
-		}
-		queue.push(video);
-		localStorage['queue'] = JSON.stringify(queue);
-		console.log(localStorage.getItem('queue'));
+		addToQueue(title, url);
+		// video = {'title': title, 'url': url};
+		// console.log('video - ' + JSON.stringify(video));
+		// var queue = [];
+		// if (localStorage['queue'] != null) {
+		// 	queue = JSON.parse(localStorage['queue']);
+		// }
+		// queue.push(video);
+		// localStorage['queue'] = JSON.stringify(queue);
+		// console.log(localStorage.getItem('queue'));
 	 	bootstrap_alert.success('queued!');
 	});
 });

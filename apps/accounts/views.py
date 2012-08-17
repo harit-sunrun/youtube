@@ -5,10 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 from django.contrib.messages.api import get_messages
-from social_auth import __version__ as version
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
 
+from social_auth import __version__ as version
 from vlists.apps.playlists.models import UserPlaylist
 from vlists.apps.playlists.models import PlaylistVideo
 from vlists.apps.videos.models import Video
@@ -79,8 +80,22 @@ def get_videos_for_playlist(request):
 	"""
 	given a user playlist name return all videos added in that playlist 
 	"""
+	videos = get_videos(request)
+	logging.info('returning videos: user=%s, playlist=%s, videos=%s'%(request.user, request.POST['playlist'], videos))
+	return render_to_response('videos.html', {'videos': videos})
+
+@csrf_exempt
+def queue_videos_for_playlist(request):
+	"""
+	returns videos as list for queueing 
+	"""
+	videos = get_videos(request)
+	json = serializers.serialize("json", videos)
+	return HttpResponse(json, mimetype="application/json")
+	
+
+def get_videos(request):
 	playlist_name = request.POST['playlist']
 	playlist = UserPlaylist.objects.get_playlist_for_user_with_name(request.user, playlist_name)
 	videos = PlaylistVideo.objects.get_all_videos_for_playlist(playlist)
-	logging.info('returning videos: user=%s, playlist=%s, videos=%s'%(request.user, playlist_name, videos))
-	return render_to_response('videos.html', {'videos': videos})
+	return videos
