@@ -11,7 +11,7 @@ $(function () {
  });
 });
 
-/* 
+/*
 finding youtube videos
 API source : https://developers.google.com/youtube/2.0/developers_guide_jsonc
 */
@@ -20,7 +20,7 @@ $(function(){
 		var search_input = $(this).val();
 		var keyword = encodeURIComponent(search_input);
 		var yt_url = 'http://gdata.youtube.com/feeds/api/videos?q='+keyword+'&format=5&max-results=10&v=2&alt=jsonc';
-		
+
 		$.ajax({
 		  url: yt_url,
 		  type: 'GET',
@@ -38,7 +38,7 @@ $(function(){
 						'id': data.id,
 						'title': data.title,
 						'views': data.viewCount,
-						'thumbnail': data.thumbnail['sqDefault'],
+						'thumbnail': data.thumbnail['sqDefault']
 					}
 					item = video_result_template(search_data);
 					$('#result').append(item).fadeIn('slow');
@@ -77,7 +77,7 @@ $(function(){
 });
 
 // setting up ajaxSetup
-$.ajaxSetup({ 
+$.ajaxSetup({
      beforeSend: function(xhr, settings) {
          function getCookie(name) {
              var cookieValue = null;
@@ -98,7 +98,7 @@ $.ajaxSetup({
              // Only send the token to relative URLs i.e. locally.
              xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
          }
-     } 
+     }
 });
 
 // creating new playlist
@@ -120,11 +120,6 @@ $(function() {
 		var thumbnail = $form.closest('.item').find('.thumbnail').attr('src');
         var playlist = $form.find('.input-small').val();
 
-		// console.debug(thumbnail);
-        // console.debug(title);
-        // console.debug(playlist);
-		// console.debug(id);
-
         // send the data to the server using .ajax() or .post()
 		$.ajax({
 			type: 'POST',
@@ -139,11 +134,11 @@ $(function() {
 			success: function(response, textStatus, jqXHR){
 				 bootstrap_alert.success('video saved successfully');
 			},
-            
+
 			// callback handler that will be called on error
       		error: function(jqXHR, textStatus, errorThrown){
 				bootstrap_alert.error('There were some errors while saving the video. Please try in a while');
-			},
+			}
 		});
     });
 });
@@ -224,7 +219,7 @@ $(function(){
 		    bootstrap_alert.error('Error while queueing the videos, please try in a while');
 		  }
 		});
-		
+
 	});
 });
 
@@ -247,15 +242,6 @@ $(function(){
 		var url = $(this).children('.url').text();
 		var thumbnail = $(this).find('img').attr('src');
 		addToQueue(title, url, thumbnail);
-		// video = {'title': title, 'url': url};
-		// console.log('video - ' + JSON.stringify(video));
-		// var queue = [];
-		// if (localStorage['queue'] != null) {
-		// 	queue = JSON.parse(localStorage['queue']);
-		// }
-		// queue.push(video);
-		// localStorage['queue'] = JSON.stringify(queue);
-		// console.log(localStorage.getItem('queue'));
 	 	bootstrap_alert.success('queued!');
 	});
 });
@@ -270,11 +256,11 @@ $(function(){
 		pause: 1000,
 		hoverPause: true
 	});
-	
+
 	$('.slides_control').css({
 		"height": "600px",
 		"margin-right": "400px"
 	});
-	
+
 	$('.pagination').hide('');
 });
