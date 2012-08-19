@@ -14,9 +14,3 @@ urlpatterns = patterns('',
 	url(r'^getVideos', get_videos_for_playlist),
 	url(r'^queuePlaylistVideos', queue_videos_for_playlist)
 )
-	
-"""
-addVideo
-removeVideo
-removePlaylist
-"""

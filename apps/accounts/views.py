@@ -1,10 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
-from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.shortcuts import render_to_response, redirect
-from django.contrib.messages.api import get_messages
+from django.shortcuts import render_to_response
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
@@ -15,7 +13,6 @@ from vlists.apps.playlists.models import PlaylistVideo
 from vlists.apps.videos.models import Video
 
 import logging
-import json
 logging.getLogger().setLevel(logging.INFO)
 
 def home(request):
@@ -51,14 +48,14 @@ def addVideo(request):
 	url = request.POST['url']
 	video_title = request.POST['video_title']
 	thumbnail = request.POST['thumbnail']
-	
+
 	logging.info('add Video request for user=%s,  playlist=%s, url=%s' % (user, playlist_name, url))
 	# get user playlist with name
 	playlist = UserPlaylist.objects.get_or_create_playlist_for_user(user, playlist_name)
-	
+
 	# get video
 	video = Video.objects.get_or_create_video(title=video_title, url=url, thumbnail=thumbnail)
-	
+
 	# add video to playlist
 	PlaylistVideo.objects.add_video_to_playlist(video, playlist) # returns the video
 
@@ -79,7 +76,7 @@ def get_playlists_for_user(request):
 @login_required
 def get_videos_for_playlist(request):
 	"""
-	given a user playlist name return all videos added in that playlist 
+	given a user playlist name return all videos added in that playlist
 	"""
 	videos = get_videos(request)
 	logging.info('returning videos: user=%s, playlist=%s, videos=%s'%(request.user, request.POST['playlist'], videos))
@@ -88,12 +85,11 @@ def get_videos_for_playlist(request):
 @csrf_exempt
 def queue_videos_for_playlist(request):
 	"""
-	returns videos as list for queueing 
+	returns videos as list for queueing
 	"""
 	videos = get_videos(request)
 	json = serializers.serialize("json", videos)
 	return HttpResponse(json, mimetype="application/json")
-	
 
 def get_videos(request):
 	playlist_name = request.POST['playlist']
