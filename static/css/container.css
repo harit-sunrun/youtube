@@ -91,3 +91,12 @@
 .playlist .icon-chevron-right {
 	padding-top: 1.6%;
 }
+
+.player_controls {
+    margin-left: 34%;
+}
+
+.queue_list {
+    overflow: scroll;
+    height: 651px;
+}

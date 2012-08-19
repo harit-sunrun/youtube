@@ -34,7 +34,7 @@ $(function(){
                 $('#result').html(template);
 				$.each(response.data.items, function(i, data) {
 					//console.log(data)
-					search_data = {
+					var search_data = {
 						'id': data.id,
 						'title': data.title,
 						'views': data.viewCount,
@@ -70,11 +70,16 @@ function video_result_template(data) {
 $(function(){
 	$('.item').live('click', function(){
 		// alert(this.id);
-		var url = $('#video-frame').attr('src');
-		var new_url = url.replace(/embed\/[\w -]*/g, 'embed/' + this.id);
-		$('#video-frame').attr('src', new_url);
+        play_video(this.id);
 	});
 });
+
+// playing video in left pane
+function play_video(id) {
+    var url = $('#video-frame').attr('src');
+    var new_url = url.replace(/embed\/[\w -]*/g, 'embed/' + id);
+    $('#video-frame').attr('src', new_url);
+}
 
 // setting up ajaxSetup
 $.ajaxSetup({
@@ -175,7 +180,7 @@ $(function(){
 // getting videos for playlists
 $(function(){
 	$('body').on('click', '.playlist', function(event) {
-		div = $(this);
+		var div = $(this);
 		var playlist = div.attr('id');
 		// alert('getting the videos for ' + playlist);
 		$.ajax({
@@ -225,7 +230,7 @@ $(function(){
 
 // adding to localStorage
 function addToQueue(title, url, thumbnail) {
-	video = {'title': title, 'url': url, 'thumbnail': thumbnail};
+	var video = {'title': title, 'url': url, 'thumbnail': thumbnail};
 	var queue = [];
 	if (localStorage['queue'] != null) {
 		queue = JSON.parse(localStorage['queue']);
@@ -235,7 +240,7 @@ function addToQueue(title, url, thumbnail) {
 	console.log(localStorage.getItem('queue'));
 }
 
-// queue-ing videos
+// queue-ing videos from playlist
 $(function(){
 	$('body').on('click', '.video', function(event) {
 		var title = $(this).children('.title').text();
@@ -245,6 +250,70 @@ $(function(){
 	 	bootstrap_alert.success('queued!');
 	});
 });
+
+// queue-ing videos from search page
+$(function(){
+    $('body').on('click', '.queue_search_video', function(e){
+        var item = $(this).closest('.item');
+        var title = item.find('.title').text();
+        var url = item.attr('id');
+        var thumbnail = item.find('img').attr('src');
+        console.log(title + "," + url + "," + thumbnail);
+        addToQueue(title, url, thumbnail);
+        bootstrap_alert.success('queued!');
+        e.stopPropagation();
+    });
+});
+
+// loading queue page
+$(function(){
+    $('#queue').click(function(){
+        $("#feature").load("templates/queue.html", function(){
+            if (localStorage['queue'] == null) {
+                $('.queue_list').append('<p>You have not added any video to the queue yet</p>');
+            } else {
+                var queue_list = JSON.parse(localStorage['queue']);
+                for (var i = 0; i < queue_list.length; i ++) {
+                    console.log(queue_list[i]);
+                    var item = fill_queue_item(queue_list[i]);
+                    $('.queue_list').append(item).fadeIn('slow');
+                }
+            }
+        });
+    });
+
+    $('body').on('click', '#play', function(){
+        bootstrap_alert.success('will play video now');
+    });
+
+    $('body').on('click', '#previous', function(){
+        bootstrap_alert.success('will play previous video now');
+    });
+
+    $('body').on('click', '#next', function(){
+        bootstrap_alert.success('will play next video now');
+    });
+
+    $('body').on('click', '#shuffle', function(){
+        bootstrap_alert.success('will shuffle videos now');
+    });
+
+    // clicking on any video in queue start playing the video in left pane
+    $('body').on('click', '.queue_item', function(){
+        play_video(this.id);
+    });
+});
+
+// filling up queue item
+function fill_queue_item(data) {
+    var template = $('.queue_item').first().clone();
+    template.removeClass('hide-item');
+    template.find('img').attr('src', data.thumbnail);
+    template.find('.title').html(data.title);
+    template.attr('id', data.url);
+    template.addClass('view-item');
+    return template;
+}
 
 // animating slideshow on landing page
 $(function(){
