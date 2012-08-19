@@ -167,6 +167,7 @@ $(function(){
 	$('#playlist').click(function(){
 		$.ajax({
 			url: '/getUserPlaylists',
+            cache: false,
 			success: function(response, textStatus, jqXHR){
 				// console.log(response);
 				$('#feature').empty().append(response);
