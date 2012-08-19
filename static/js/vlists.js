@@ -120,7 +120,8 @@ $(function() {
 
         // handle everything yourself
         var $form = $(this);
-        var title = $form.closest('.video-detail').find('.title').text();
+        var item = $form.closest('.item');
+        var title = item.find('.title').text();
         var id = $form.closest('.item').attr('id');
 		var thumbnail = $form.closest('.item').find('.thumbnail').attr('src');
         var playlist = $form.find('.input-small').val();
