@@ -297,7 +297,7 @@ $(function(){
     });
 
     $('body').on('click', '#shuffle', function(){
-        bootstrap_alert.success('will shuffle videos now');
+        shuffle($('.queue_list div'));
     });
 
     // clicking on any video in queue start playing the video in left pane
@@ -305,6 +305,22 @@ $(function(){
         play_video(this.id);
     });
 });
+
+// shuffle videos
+// code courtesy : http://stackoverflow.com/questions/315177/any-way-to-shuffle-content-in-multiple-div-elements
+function shuffle(v) {
+    var replace = $('<div>');
+    var size = v.size();
+
+    while (size >= 1) {
+        var random = Math.floor(Math.random() * size);
+        var temp = v.get(random);
+        replace.append(temp);
+        v = v.not(temp);
+        size--;
+    }
+    $('.queue_list').html(replace.html());
+}
 
 // filling up queue item
 function fill_queue_item(data) {
