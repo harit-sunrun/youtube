@@ -1,15 +1,112 @@
-// loading search page
-$(function () {
-  $("#search").click(function() {
-    $("#feature").load("templates/search.html", function() {
-        $("#search-input").focus();
-        $("#search-input").css({
-			"margin-left": "20%",
-			"margin-top" : "2%"
-		});
+$(function(){
+    $('#search').click(function(){
+        show_page('search');
+        tidy_search_box();
     });
- });
+
+    $('#playlist').click(function(){
+        show_page('playlists');
+        show_playlists();
+    });
+
+    $('#settings').click(function(){
+        show_page('settings');
+    });
+
+    $('#queue').click(function(){
+        show_queue();
+        show_page('queue');
+    });
+
+    // some extra things
+    // 1. always focus on search box
+    tidy_search_box()
 });
+
+function show_page(page) {
+    $('#search_page').hide();
+    $('#playlist_page').hide();
+    $('#setting_page').hide();
+    $('#queue_page').hide();
+    if (page == 'search') {
+        $('#search_page').show();
+    }
+    else if (page == 'playlists') {
+        $('#playlist_page').show();
+    }
+    else if (page == 'settings') {
+        $('#setting_page').show();
+    }
+    else if (page == 'queue') {
+        $('#queue_page').show();
+    }
+
+}
+
+function show_playlists() {
+    $.ajax({
+        url: '/getUserPlaylists',
+        cache: false,
+        success: function(response, textStatus, jqXHR){
+            // console.log(response);
+            $('#playlist_page').empty().append(response);
+        },
+        error: function(response, textStatus, jqXHR) {
+            bootstrap_alert.error('error in receiving playlists');
+        }
+    });
+}
+
+function show_queue() {
+    if (localStorage['queue'] == null) {
+        $('.queue_list').append('<p>You have not added any video to the queue yet</p>');
+    } else {
+        var queue_list = JSON.parse(localStorage['queue']);
+        var items_displayed = $('.queue_list .view-item').length;
+        if (items_displayed == queue_list.length) {
+            return;
+        }
+
+        // remove already displayed queue
+        $('.queue_list .view-item').remove();
+
+        // create queue
+        for (var i = 0; i < queue_list.length; i ++) {
+            console.log(queue_list[i]);
+            var item = fill_queue_item(queue_list[i]);
+//            $('.queue_list').append(item).fadeIn('slow');
+        }
+    }
+}
+
+// queue navigator buttons control
+$(function(){
+    $('body').on('click', '#play', function(){
+        bootstrap_alert.success('will play video now');
+    });
+
+    $('body').on('click', '#previous', function(){
+        bootstrap_alert.success('will play previous video now');
+    });
+
+    $('body').on('click', '#next', function(){
+        bootstrap_alert.success('will play next video now');
+    });
+
+    $('body').on('click', '#shuffle', function(){
+        shuffle($('.queue_list div'));
+    });
+
+    // clicking on any video in queue start playing the video in left pane
+    $('body').on('click', '.queue_item', function(){
+        play_video(this.id);
+    });
+});
+
+function tidy_search_box() {
+    $('#search-input').val("");
+    $('#search-input').focus();
+}
 
 /*
 finding youtube videos
@@ -162,29 +259,11 @@ bootstrap_alert.error = function(message) {
   	div.slideDown(500).delay(2000).slideUp(500);
 }
 
-// getting playlists for user
-$(function(){
-	$('#playlist').click(function(){
-		$.ajax({
-			url: '/getUserPlaylists',
-            cache: false,
-			success: function(response, textStatus, jqXHR){
-				// console.log(response);
-				$('#feature').empty().append(response);
-			},
-			error: function(response, textStatus, jqXHR) {
-				bootstrap_alert.error('error in receving playlists');
-			}
-		});
-	});
-});
-
 // getting videos for playlists
 $(function(){
 	$('body').on('click', '.playlist', function(event) {
 		var div = $(this);
 		var playlist = div.attr('id');
-		// alert('getting the videos for ' + playlist);
 		$.ajax({
 		  url: '/getVideos',
 		  type: 'POST',
@@ -194,7 +273,7 @@ $(function(){
 		  },
 		  success: function(response, textStatus, jqXHR) {
 		    // console.log(response);
-			$('#feature').empty().append(response);
+			$('#playlist_page').empty().append(response);
 		  },
 		  error: function(response, textStatus, jqXHR) {
 		    bootstrap_alert.error('There were some errors while getting your videos, please try in a while');
@@ -239,6 +318,8 @@ function addToQueue(title, url, thumbnail) {
 	}
 	queue.push(video);
 	localStorage['queue'] = JSON.stringify(queue);
+    // also append to Queue page
+    fill_queue_item(video);
 	console.log(localStorage.getItem('queue'));
 }
 
@@ -267,45 +348,6 @@ $(function(){
     });
 });
 
-// loading queue page
-$(function(){
-    $('#queue').click(function(){
-        $("#feature").load("templates/queue.html", function(){
-            if (localStorage['queue'] == null) {
-                $('.queue_list').append('<p>You have not added any video to the queue yet</p>');
-            } else {
-                var queue_list = JSON.parse(localStorage['queue']);
-                for (var i = 0; i < queue_list.length; i ++) {
-                    console.log(queue_list[i]);
-                    var item = fill_queue_item(queue_list[i]);
-                    $('.queue_list').append(item).fadeIn('slow');
-                }
-            }
-        });
-    });
-
-    $('body').on('click', '#play', function(){
-        bootstrap_alert.success('will play video now');
-    });
-
-    $('body').on('click', '#previous', function(){
-        bootstrap_alert.success('will play previous video now');
-    });
-
-    $('body').on('click', '#next', function(){
-        bootstrap_alert.success('will play next video now');
-    });
-
-    $('body').on('click', '#shuffle', function(){
-        shuffle($('.queue_list div'));
-    });
-
-    // clicking on any video in queue start playing the video in left pane
-    $('body').on('click', '.queue_item', function(){
-        play_video(this.id);
-    });
-});
-
 // shuffle videos
 // code courtesy : http://stackoverflow.com/questions/315177/any-way-to-shuffle-content-in-multiple-div-elements
 function shuffle(v) {
@@ -330,10 +372,13 @@ function fill_queue_item(data) {
     template.find('.title').html(data.title);
     template.attr('id', data.url);
     template.addClass('view-item');
+
+    // also add to queue page at the same time
+    $('.queue_list').append(template).fadeIn('slow');
     return template;
 }
 
-// animating slideshow on landing page
+// animating slide show on landing page
 $(function(){
 	$('#slides').slides({
 		preload: true,

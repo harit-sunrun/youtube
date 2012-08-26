@@ -10,6 +10,15 @@
 	background-color: white;
 }
 
+#search-input {
+    margin-left: 20%;
+    margin-top: 2%;
+}
+
+#playlist_page, #setting_page, #queue_page {
+    display: none;
+}
+
 #player {
 	width: 640px;
 	float: left;
