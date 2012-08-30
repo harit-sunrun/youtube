@@ -3,7 +3,6 @@ var youtube_player; // global player variable
 var video_index = 0; //current video index
 var current_video_queue = []; // will hold current active queue
 var repeat = 0; // 0: no-repeat, 1: repeat-all, 2: repeat-one
-var current_playing_video_id = 0; // keep track of current video played, useful in case of repeat-one
 
 // middle-navigation buttons
 $(function () {
@@ -29,6 +28,15 @@ $(function () {
     // some extra things
     // 1. always focus on search box
     tidy_search_box()
+
+    // 2. clear the current queue
+    $('#clear_queue').click(function () {
+        localStorage.removeItem('queue');
+        $('.queue_list .view-item').empty();
+        reset_current_video_queue();
+        reset_video_index();
+        bootstrap_alert.success("queue cleared.");
+    });
 });
 
 // which page to show based on page
@@ -57,10 +65,10 @@ function show_playlists() {
     $.ajax({
         url:'/getUserPlaylists',
         cache:false,
-        success:function (response, textStatus, jqXHR) {
+        success:function (response) {
             $('#playlist_page').empty().append(response);
         },
-        error:function (response, textStatus, jqXHR) {
+        error:function () {
             bootstrap_alert.error('error in receiving playlists');
         }
     });
@@ -111,29 +119,29 @@ $(function () {
             url:yt_url,
             type:'GET',
             dataType:'jsonp',
-            complete:function (xhr, textStatus) {
+            complete:function () {
                 //called when complete
             },
-            success:function (response, textStatus, xhr) {
+            success:function (response) {
                 if (response.data.items) {
                     var template = $('#item').clone();
                     $('#result').html(template);
                     $.each(response.data.items, function (i, data) {
-                        //console.log(data)
+                        //noinspection JSUnresolvedVariable
                         var search_data = {
                             'id':data.id,
                             'title':data.title,
                             'views':data.viewCount,
                             'thumbnail':data.thumbnail['sqDefault']
                         }
-                        item = video_result_template(search_data);
+                        var item = video_result_template(search_data);
                         $('#result').append(item).fadeIn('slow');
                     });
                 } else {
 
                 }
             },
-            error:function (xhr, textStatus, errorThrown) {
+            error:function () {
                 //called when there is an error
             }
         });
@@ -216,12 +224,12 @@ $(function () {
                 thumbnail:thumbnail
                 // csrfmiddlewaretoken: '{{ csrf_token }}',
             },
-            success:function (response, textStatus, jqXHR) {
+            success:function () {
                 bootstrap_alert.success('video saved successfully');
             },
 
             // callback handler that will be called on error
-            error:function (jqXHR, textStatus, errorThrown) {
+            error:function () {
                 bootstrap_alert.error('There were some errors while saving the video. Please try in a while');
             }
         });
@@ -244,21 +252,20 @@ bootstrap_alert.error = function (message) {
 
 // getting videos given playlist name
 $(function () {
-    $('body').on('click', '.playlist', function (event) {
+    $('body').on('click', '.playlist', function () {
         var div = $(this);
         var playlist = div.attr('id');
         $.ajax({
             url:'/getVideos',
             type:'POST',
             data:{'playlist':playlist},
-            complete:function (xhr, textStatus) {
+            complete:function () {
                 //called when complete
             },
-            success:function (response, textStatus, jqXHR) {
-                // console.log(response);
+            success:function (response) {
                 $('#playlist_page').empty().append(response);
             },
-            error:function (response, textStatus, jqXHR) {
+            error:function () {
                 bootstrap_alert.error('There were some errors while getting your videos, please try in a while');
             }
         });
@@ -274,16 +281,16 @@ $(function () {
             url:'/queuePlaylistVideos',
             type:'POST',
             data:{'playlist':playlist},
-            complete:function (xhr, textStatus) {
-                //called when complete
+            complete:function () {
             },
-            success:function (data, textStatus, xhr) {
+            success:function (data) {
                 for (var i = 0; i < data.length; i++) {
+                    //noinspection JSUnresolvedVariable
                     addToQueue(data[i].fields['title'], data[i].fields['url'], data[i].fields['thumbnail']);
                 }
                 bootstrap_alert.success('queued all videos');
             },
-            error:function (xhr, textStatus, errorThrown) {
+            error:function () {
                 bootstrap_alert.error('Error while queueing the videos, please try in a while');
             }
         });
@@ -328,7 +335,7 @@ function fill_queue_item(data) {
 
 // 'queue'-ing videos from playlist
 $(function () {
-    $('body').on('click', '.video', function (event) {
+    $('body').on('click', '.video', function () {
         var title = $(this).children('.title').text();
         var url = $(this).children('.url').text();
         var thumbnail = $(this).find('img').attr('src');
@@ -358,8 +365,7 @@ function shuffle(v) {
     var size = v.size();
 
     // shuffle the playing queue too
-    // console.log("current queue - " + current_video_queue.toString());
-    current_video_queue = [];
+    reset_current_video_queue();
     reset_video_index();
 
     while (size >= 1) {
@@ -371,7 +377,6 @@ function shuffle(v) {
         size--;
     }
     $('.queue_list').html(replace.html());
-//    console.log("shuffled queue - " + current_video_queue.toString());
 }
 
 // animating slide show on landing page
@@ -402,6 +407,7 @@ $(function () {
 });
 
 function onYouTubeIframeAPIReady() {
+    //noinspection JSUnresolvedFunction,JSUnresolvedVariable
     youtube_player = new YT.Player('player', {
         height:'390',
         width:'640',
@@ -415,39 +421,32 @@ function onYouTubeIframeAPIReady() {
 
 // playing video in left pane
 function play_video(id) {
+    //noinspection JSUnresolvedFunction
     youtube_player.loadVideoById(id, 0);
 }
 
 function onPlayerReady() {
-//    bootstrap_alert.success("player ready");
-//    play_video(current_video_queue[video_index]);
 }
 
 // when video is finished playing, what next video to play?
 function onPlayerStateChange(event) {
-//    console.log(event.data);
     if (event.data == 0) {
         var id = get_next_video_id();
-//        console.log("playing now - " + id);
         if (id == -1) {
             // repeat = 0, reset video_index
             reset_video_index();
         } else {
             play_video(id);
         }
-        //video_index = 0; // reset index so that Play start playing again
     }
-//    bootstrap_alert.success("player state changed");
 }
 
 // This will do all logic checks for
 // repeat-one, repeat-all and will send
 // the appropriate video id
 function get_next_video_id() {
-//    console.log("repeat - " + repeat + ", video_index - " + video_index);
     if (repeat == 2) {
         // repeat-one
-        // return video_index;
     } else if (repeat == 1) {
         // repeat-all
         increment_video_index();
@@ -459,28 +458,20 @@ function get_next_video_id() {
             increment_video_index();
         }
     }
-//    console.log('returning video_index - ' + video_index);
     return current_video_queue[video_index];
-}
-
-function set_current_playing_video_id(id) {
-    //current_playing_video_id = id; // test and remove because this might not be needed anymore
 }
 
 // queue navigator buttons control
 $(function () {
     $('body').on('click', '#play', function () {
-//        bootstrap_alert.success('will play video now');
         play_video(current_video_queue[video_index]); // always play current video
     });
 
     $('body').on('click', '#previous', function () {
-//        bootstrap_alert.success('will play previous video now');
         play_previous();
     });
 
     $('body').on('click', '#next', function () {
-//        bootstrap_alert.success('will play next video now');
         play_next();
     });
 
@@ -496,26 +487,17 @@ $(function () {
     $('body').on('click', '.queue_item', function () {
         // set video_index to be current index
         video_index = $.inArray(this.id, current_video_queue);
-
-        set_current_playing_video_id(this.id);
         play_video(this.id);
     });
 });
 
-function play_queue_video() {
-    // set_current_playing_video_id(current_video_queue[video_index]);
-    play_video(current_video_queue[video_index]);
-}
-
 function play_next() {
     increment_video_index();
-    // set_current_playing_video_id(current_video_queue[video_index]);
     play_video(current_video_queue[video_index]);
 }
 
 function play_previous() {
     decrement_video_index();
-    // set_current_playing_video_id(current_video_queue[video_index]);
     play_video(current_video_queue[video_index]);
 }
 
@@ -531,7 +513,6 @@ function toggle_repeat() {
     if (repeat == 2) {
         $('.repeat-badge').show();
     }
-//    console.log("repeat - " + repeat + ", color - " + color);
 }
 
 
@@ -554,5 +535,9 @@ function decrement_video_index() {
 
 function reset_video_index() {
     video_index = 0;
+}
+
+function reset_current_video_queue() {
+    current_video_queue = [];
 }
 

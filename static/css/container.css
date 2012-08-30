@@ -103,7 +103,7 @@
 
 .player_controls {
     margin-left: 20%;
-    margin-right: 10%;
+    /*margin-right: 10%;*/
     height: 50px;
 }
 
@@ -119,4 +119,8 @@
 
 .repeat-badge {
     display: none;
+}
+
+#clear_queue {
+    margin-top: 10%;
 }
