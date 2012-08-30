@@ -102,10 +102,21 @@
 }
 
 .player_controls {
-    margin-left: 34%;
+    margin-left: 20%;
+    margin-right: 10%;
+    height: 50px;
 }
 
 .queue_list {
     overflow: scroll;
     height: 651px;
+}
+
+#play, #previous, #next, #shuffle, #repeat {
+    margin-top: 3%;
+    font-size: 20px;
+}
+
+.repeat-badge {
+    display: none;
 }

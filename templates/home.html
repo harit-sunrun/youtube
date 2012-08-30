@@ -21,9 +21,9 @@
 {% block content %}
 	<div id="player">
 		<!-- hardcoded for the moment -->
-		<div id="video">
-			<iframe id="video-frame" width="560" height="315" src="http://www.youtube.com/embed/gSy4HeDjPvs?autoplay=0" frameborder="0" allowfullscreen></iframe>
-		</div>
+		<!--div id="video">
+			<iframe class="youtube-player" id="video-frame" width="560" height="315" src="http://www.youtube.com/embed/gSy4HeDjPvs?autoplay=0" frameborder="0" allowfullscreen></iframe>
+		</div-->
 	</div>
 
 	<div id="navigator" class="tabbable navigator-class">
@@ -107,8 +107,21 @@
         <div id="setting_page">settings</div>
         <div id="queue_page">
             <div class="queue">
-                <div class="player_controls">
-                    <button id="previous" class="btn btn-large navigator-button navigator-icons">
+                <div class="navbar">
+                    <div class="navbar-inner player_controls">
+                        <ul class="nav ">
+                            <li id="previous" class="#"><a href="#"><i class="icon-backward icon-large"></i></a></li>
+                            <li id="play"><a href="#"><i class="icon-play icon-large"></i></a></li>
+                            <li id="next"><a href="#"><i class="icon-forward icon-large"></i></a></li>
+                            <li id="shuffle"><a href="#"><i class="icon-random icon-large"></i></a></li>
+                            <li id="repeat">
+                                <a href="#">
+                                    <i class="icon-refresh icon-large"></i><span class="badge badge-info repeat-badge">1</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--button id="previous" class="btn btn-large navigator-button navigator-icons">
                         <i class="icon-backward icon-large"></i>
                     </button>
                     <button id="play" class="btn btn-large navigator-button navigator-icons">
@@ -120,6 +133,9 @@
                     <button id="shuffle" class="btn btn-large navigator-button navigator-icons">
                         <i class="icon-random icon-large"></i>
                     </button>
+                    <button id="repeat" class="btn btn-large navigator-button navigator-icons" style="display: none;">
+                        <i class="icon-refresh icon-large"></i>
+                    </button-->
                 </div>
 
                 <div class="queue_list">
