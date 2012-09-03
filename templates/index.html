@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="../static/css/zocial.css" type="text/css" media="screen" title="no title" charset="utf-8">
 {% endblock %}
 
-{% block title %} 
+{% block title %}
 	Welcome to vlists! a better way to manage your playlists
 {% endblock %}
 
@@ -20,7 +20,10 @@
 		<a class="zocial twitter buttons" href="{% url socialauth_begin 'twitter' %}">Sign in with Twitter</a>
 	    <a class="zocial google buttons" href="{% url socialauth_begin 'google' %}">Sign in with Google</a>
 		<a class="zocial facebook buttons" href="{% url socialauth_begin 'facebook' %}">Sign in with Facebook</a>
-	</div>
+        <div id="browse_app">
+            <a id="home_button" class="btn btn-large btn-info" href="/done">Browse</a>
+        </div>
+    </div>
 	<div id="show_container">
 		<div id="slideshow">
 			<div id="slides">

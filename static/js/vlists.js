@@ -1,4 +1,6 @@
 /* global variables */
+var guest_user = "guest!";
+var cookie_user = "vlist_user";
 var youtube_player; // global player variable
 var video_index = 0; //current video index
 var current_video_queue = []; // will hold current active queue
@@ -12,12 +14,13 @@ $(function () {
     });
 
     $('#playlist').click(function () {
-        show_page('playlists');
         show_playlists();
+        // show_page('playlists'); // moved to above function
     });
 
     $('#settings').click(function () {
-        show_page('settings');
+        show_settings();
+        // show_page('settings'); // moved to above function
     });
 
     $('#queue').click(function () {
@@ -32,7 +35,7 @@ $(function () {
     // 2. clear the current queue
     $('#clear_queue').click(function () {
         localStorage.removeItem('queue');
-        $('.queue_list .view-item').empty();
+        $('.queue_list .view-item').remove();
         reset_current_video_queue();
         reset_video_index();
         bootstrap_alert.success("queue cleared.");
@@ -62,16 +65,33 @@ function show_page(page) {
 
 // click to playlists calls this
 function show_playlists() {
-    $.ajax({
-        url:'/getUserPlaylists',
-        cache:false,
-        success:function (response) {
-            $('#playlist_page').empty().append(response);
-        },
-        error:function () {
-            bootstrap_alert.error('error in receiving playlists');
-        }
-    });
+    // Check if the user is authenticated
+    var user = $.cookie(cookie_user);
+    if (user == guest_user) {
+        ask_user_to_sign_in();
+    } else {
+        $.ajax({
+            url:'/getUserPlaylists',
+            cache:false,
+            success:function (response) {
+                $('#playlist_page').empty().append(response);
+            },
+            error:function () {
+                bootstrap_alert.error('error in receiving playlists');
+            }
+        });
+        show_page('playlists');
+    }
+}
+
+// click on settings calls this
+function show_settings() {
+    var user = $.cookie(cookie_user);
+    if (user == guest_user) {
+        ask_user_to_sign_in();
+    } else {
+        show_page('settings');
+    }
 }
 
 // click on queue calls this
@@ -541,3 +561,25 @@ function reset_current_video_queue() {
     current_video_queue = [];
 }
 
+// If a user is not logged in and try to
+// click 'Playlists', 'Settings' or 'Add to Playlists'
+// he/she should login first to do that
+function ask_user_to_sign_in() {
+    $('#sign_in_modal').modal('show');
+}
+
+// check is user is logged in while clicking on
+// 'Add to Playlist'
+$(function(){
+    $('body').on('click', '#add_to_playlist', function(){
+//        alert('click!');
+        var user = $.cookie(cookie_user);
+        var form = $(this).next('.dropdown-menu');
+        form.hide();
+        if (user == guest_user) {
+            ask_user_to_sign_in();
+        } else {
+            form.show();
+        }
+    });
+});

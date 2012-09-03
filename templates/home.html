@@ -6,20 +6,22 @@
 
 {% block javascript %}
 	{{ block.super }}
-	<script type="text/javascript" src="/static/js/vlists.js"></script>
+    <script type="text/javascript" xmlns="http://www.w3.org/1999/html" src="/static/js/vlists.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap-dropdown.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap-alert.js"></script>
-	<script type="text/javascript" src="/static/js/notify-osd.js"></script>
+	<script type="text/javascript" src="/static/js/bootstrap-modal.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
 {% endblock %}
 
 {% block css %}
 	{{ block.super }}
 	<link rel="stylesheet" href="/static/css/container.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="../static/css/zocial.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="/static/css/font-awesome.css" type="text/css" media="screen" title="no title" charset="utf-8">
 {% endblock %}
 
 {% block content %}
-	<div id="player">
+    <div id="player">
 		<!-- hardcoded for the moment -->
 		<!--div id="video">
 			<iframe class="youtube-player" id="video-frame" width="560" height="315" src="http://www.youtube.com/embed/gSy4HeDjPvs?autoplay=0" frameborder="0" allowfullscreen></iframe>
@@ -29,28 +31,28 @@
 	<div id="navigator" class="tabbable navigator-class">
 		<ul class="nav nav-pills nav-stacked">
 		  <li>
-			<button id="search" class="btn btn-large navigator-button navigator-icons">
+			<a id="search" class="btn btn-large navigator-button navigator-icons">
 				<i class="icon-search icon-large"></i>
 			    search
-			</button>
+			</a>
 		  </li>
 		  <li>
-			<button id="playlist" class="btn btn-large navigator-button navigator-icons">
+			<a id="playlist" class="btn btn-large navigator-button navigator-icons">
 			    <i class="icon-list icon-large"></i>
 				playlists
-			</button>
+			</a>
 		  </li>
 		  <li>
-			<button id="settings" class="btn btn-large navigator-button navigator-icons">
+			<a id="settings" class="btn btn-large navigator-button navigator-icons">
 			  	<i class="icon-cog icon-large"></i>
-				settings
-			</button>
+                settings
+            </a>
 		  </li>
           <li>
-              <button id="queue" class="btn btn-large navigator-button navigator-icons">
+              <a id="queue" class="btn btn-large navigator-button navigator-icons">
                   <i class="icon-cog icon-play-circle"></i>
                   queue
-              </button>
+              </a>
           </li>
 		</ul>
 	</div>
@@ -74,29 +76,29 @@
 
                         <div class="btn-toolbar">
                             <div class="btn-group" style="display:inline-block;">
-                                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
+                                <a id="add_to_playlist" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
                                     <i class="icon-list icon-in-button"></i>
                                     Add to playlist
                                     <span class="caret"/>
-                                </button>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <form class="new-playlist form-inline" onclick="event.stopPropagation()">
-                                            <input type="text" class="input-small">
+                                            <input id="new_playlist_text" type="text" class="input-small">
                                             <button class="btn btn-danger create-playlist-button" type="submit" disabled="disabled">New</button>
                                         </form>
                                     </li>
-                                    <li class="divider"/>
+                                    <li class="divider"></li>
                                     <li>
                                         <a href="#">here</a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="btn-group">
-                                <button class="btn btn-info queue_search_video" onclick="event.preventDefault()">
+                                <a class="btn btn-info queue_search_video" onclick="event.preventDefault()">
                                     <i class="icon-paper-clip icon-in-button "></i>
                                     Queue
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -151,4 +153,23 @@
             </div>
         </div>
 	</div>
+    <!-- Modal body -->
+    <!--p><a data-toggle="modal" class="btn btn-primary btn-large">Launch demo modal</a></p-->
+    <div id="sign_in_modal" class="modal hide fade in">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>This is a Modal Heading</h3>
+    </div>
+    <div class="modal-body">
+        <h4>Text in a modal</h4>
+        <p>You must sign-in to use this feature</p>
+    </div>
+    <div class="modal-footer">
+{#        <a href="#" class="btn btn-success" id="sign_in">Sign In</a>#}
+        <a class="zocial twitter buttons" href="{% url socialauth_begin 'twitter' %}">Sign in with Twitter</a>
+        <a class="zocial google buttons" href="{% url socialauth_begin 'google' %}">Sign in with Google</a>
+        <a class="zocial facebook buttons" href="{% url socialauth_begin 'facebook' %}">Sign in with Facebook</a>
+{#        <a href="#" class="btn" data-dismiss="modal">Close</a>#}
+    </div>
 {% endblock %}
+</div>
