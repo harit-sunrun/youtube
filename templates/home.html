@@ -154,22 +154,17 @@
         </div>
 	</div>
     <!-- Modal body -->
-    <!--p><a data-toggle="modal" class="btn btn-primary btn-large">Launch demo modal</a></p-->
     <div id="sign_in_modal" class="modal hide fade in">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h3>This is a Modal Heading</h3>
-    </div>
-    <div class="modal-body">
-        <h4>Text in a modal</h4>
-        <p>You must sign-in to use this feature</p>
-    </div>
-    <div class="modal-footer">
-{#        <a href="#" class="btn btn-success" id="sign_in">Sign In</a>#}
-        <a class="zocial twitter buttons" href="{% url socialauth_begin 'twitter' %}">Sign in with Twitter</a>
-        <a class="zocial google buttons" href="{% url socialauth_begin 'google' %}">Sign in with Google</a>
-        <a class="zocial facebook buttons" href="{% url socialauth_begin 'facebook' %}">Sign in with Facebook</a>
-{#        <a href="#" class="btn" data-dismiss="modal">Close</a>#}
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <p>Please sign-in to use this feature</p>
+        </div>
+        <!--div class="modal-body">
+        </div-->
+        <div class="modal-body">
+            <a class="zocial twitter buttons" href="{% url socialauth_begin 'twitter' %}">Sign in with Twitter</a>
+            <a class="zocial google buttons" href="{% url socialauth_begin 'google' %}">Sign in with Google</a>
+            <a class="zocial facebook buttons" href="{% url socialauth_begin 'facebook' %}">Sign in with Facebook</a>
+        </div>
     </div>
 {% endblock %}
-</div>
