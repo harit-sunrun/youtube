@@ -51,7 +51,8 @@ def addVideo(request):
 	user = request.user
 	playlist_name = request.POST['playlist_name']
 	url = request.POST['url']
-	video_title = request.POST['video_title']
+	video_title = remove_non_ascii(request.POST['video_title']).strip()
+
 	thumbnail = request.POST['thumbnail']
 
 	logging.info('add Video request for user=%s,  playlist=%s, url=%s' % (user, playlist_name, url))
@@ -105,3 +106,6 @@ def get_videos(request):
 	playlist = UserPlaylist.objects.get_playlist_for_user_with_name(request.user, playlist_name)
 	videos = PlaylistVideo.objects.get_all_videos_for_playlist(playlist)
 	return videos
+
+def remove_non_ascii(s):
+	return ''.join(i for i in s if ord(i)<128)

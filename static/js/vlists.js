@@ -572,7 +572,6 @@ function ask_user_to_sign_in() {
 // 'Add to Playlist'
 $(function(){
     $('body').on('click', '#add_to_playlist', function(){
-//        alert('click!');
         var user = $.cookie(cookie_user);
         var form = $(this).next('.dropdown-menu');
         form.hide();
