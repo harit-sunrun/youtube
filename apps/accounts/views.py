@@ -13,28 +13,33 @@ from vlists.apps.playlists.models import PlaylistVideo
 from vlists.apps.videos.models import Video
 
 import logging
+
 logging.getLogger().setLevel(logging.INFO)
+GUEST_USER = 'guest!'
 
 def home(request):
-    """Home view, displays login mechanism"""
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('done')
-    else:
-        return render_to_response('index.html', {'version': version},
-                                  RequestContext(request))
+	"""Home view, displays login mechanism"""
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('done')
+	else:
+		return render_to_response('index.html', {'version': version},
+			RequestContext(request))
 
-@login_required()
+# @login_required()
 def done(request):
 	"""Login complete view, displays user data"""
 	ctx = {
 		'version': version,
 		'last_login': request.session.get('social_auth_last_login_backend')
 	}
-	# logging.info('context - ' + str(ctx))
-	# logging.warn('request - ' + str(request))
-	# logging.warn('class - ' + str(request.user.__class__))
-	# logging.info('user - ' + str(dir(request.user)))
-	return render_to_response('home.html', ctx, RequestContext(request))
+	vlist_user = GUEST_USER
+	if request.user.is_authenticated():
+		vlist_user = request.user
+	response = render_to_response('home.html', ctx, RequestContext(request))
+	response.set_cookie('vlist_user', vlist_user)
+	return response
+#	return render_to_response('home.html', ctx, RequestContext(request))
+
 
 @csrf_exempt
 @login_required()
@@ -61,6 +66,7 @@ def addVideo(request):
 
 	return render_to_response('home.html', 'added!')
 
+
 @csrf_exempt
 @login_required
 def get_playlists_for_user(request):
@@ -69,8 +75,9 @@ def get_playlists_for_user(request):
 	"""
 	logging.info('getting playlist for user - ' + str(request.user))
 	playlists = UserPlaylist.objects.get_all_playlists_for_user(request.user)
-	logging.info('user=%s, playlists=%s'%(request.user, playlists))
+	logging.info('user=%s, playlists=%s' % (request.user, playlists))
 	return render_to_response('playlists.html', {'playlists': playlists})
+
 
 @csrf_exempt
 @login_required
@@ -79,8 +86,9 @@ def get_videos_for_playlist(request):
 	given a user playlist name return all videos added in that playlist
 	"""
 	videos = get_videos(request)
-	logging.info('returning videos: user=%s, playlist=%s, videos=%s'%(request.user, request.POST['playlist'], videos))
+	logging.info('returning videos: user=%s, playlist=%s, videos=%s' % (request.user, request.POST['playlist'], videos))
 	return render_to_response('videos.html', {'videos': videos})
+
 
 @csrf_exempt
 def queue_videos_for_playlist(request):
@@ -90,6 +98,7 @@ def queue_videos_for_playlist(request):
 	videos = get_videos(request)
 	json = serializers.serialize("json", videos)
 	return HttpResponse(json, mimetype="application/json")
+
 
 def get_videos(request):
 	playlist_name = request.POST['playlist']
