@@ -8,9 +8,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
 
 from social_auth import __version__ as version
-from vlists.apps.playlists.models import UserPlaylist
-from vlists.apps.playlists.models import PlaylistVideo
-from vlists.apps.videos.models import Video
+from apps.playlists.models import UserPlaylist
+from apps.playlists.models import PlaylistVideo
+from apps.videos.models import Video
 
 import logging
 

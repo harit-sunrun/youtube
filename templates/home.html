@@ -42,12 +42,12 @@
 				playlists
 			</a>
 		  </li>
-		  <li>
+		  <!--li>
 			<a id="settings" class="btn btn-large navigator-button navigator-icons">
 			  	<i class="icon-cog icon-large"></i>
                 settings
             </a>
-		  </li>
+		  </li-->
           <li>
               <a id="queue" class="btn btn-large navigator-button navigator-icons">
                   <i class="icon-cog icon-play-circle"></i>
@@ -111,14 +111,14 @@
             <div class="queue">
                 <div class="navbar">
                     <div class="navbar-inner player_controls">
-                        <ul class="nav ">
-                            <li id="previous" class="#"><a href="#"><i class="icon-backward icon-large"></i></a></li>
-                            <li id="play"><a href="#"><i class="icon-play icon-large"></i></a></li>
-                            <li id="next"><a href="#"><i class="icon-forward icon-large"></i></a></li>
-                            <li id="shuffle"><a href="#"><i class="icon-random icon-large"></i></a></li>
+                        <ul class="nav">
+                            <li id="previous" class="#"><a href="#"><i class="icon-backward icon-small"></i></a></li>
+                            <li id="play"><a href="#"><i class="icon-play icon-small"></i></a></li>
+                            <li id="next"><a href="#"><i class="icon-forward icon-small"></i></a></li>
+                            <li id="shuffle"><a href="#"><i class="icon-random icon-small"></i></a></li>
                             <li id="repeat">
                                 <a href="#">
-                                    <i class="icon-refresh icon-large"></i><span class="badge badge-info repeat-badge">1</span>
+                                    <i class="icon-refresh icon-small"></i><span class="badge badge-info repeat-badge">1</span>
                                 </a>
                             </li>
                             <li>
@@ -126,21 +126,6 @@
                             </li>
                         </ul>
                     </div>
-                    <!--button id="previous" class="btn btn-large navigator-button navigator-icons">
-                        <i class="icon-backward icon-large"></i>
-                    </button>
-                    <button id="play" class="btn btn-large navigator-button navigator-icons">
-                        <i class="icon-play icon-large"></i>
-                    </button>
-                    <button id="next" class="btn btn-large navigator-button navigator-icons">
-                        <i class="icon-forward icon-large"></i>
-                    </button>
-                    <button id="shuffle" class="btn btn-large navigator-button navigator-icons">
-                        <i class="icon-random icon-large"></i>
-                    </button>
-                    <button id="repeat" class="btn btn-large navigator-button navigator-icons" style="display: none;">
-                        <i class="icon-refresh icon-large"></i>
-                    </button-->
                 </div>
 
                 <div class="queue_list">
@@ -162,9 +147,9 @@
         <!--div class="modal-body">
         </div-->
         <div class="modal-body">
-            <a class="zocial twitter buttons" href="{% url socialauth_begin 'twitter' %}">Sign in with Twitter</a>
             <a class="zocial google buttons" href="{% url socialauth_begin 'google' %}">Sign in with Google</a>
-            <a class="zocial facebook buttons" href="{% url socialauth_begin 'facebook' %}">Sign in with Facebook</a>
+            <!-- a class="zocial twitter buttons" href="{% url socialauth_begin 'twitter' %}">Sign in with Twitter</a>
+            <a class="zocial facebook buttons" href="{% url socialauth_begin 'facebook' %}">Sign in with Facebook</a-->
         </div>
     </div>
 {% endblock %}

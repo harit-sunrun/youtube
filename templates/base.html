@@ -7,16 +7,16 @@
 		<title>{% block title %} {% endblock %}</title>
 		<meta name="generator" content="TextMate http://macromates.com/">
 		<meta name="author" content="Harit Himanshu">
-		
+
 		{% block javascript %}
 			<!--script type="text/javascript" src="../static/js/bootstrap.js"></script-->
 			<script type="text/javascript" src="/static/js/jquery.js"></script>
 			<script type="text/javascript" src="../static/js/slides.js"></script>
 		{% endblock %}
-		
+
 		{% block css %}
 			<link rel="stylesheet" href="../static/css/bootstrap.css" type="text/css" media="screen" title="no title" charset="utf-8">
-			<link rel="stylesheet" href="../static/css/index.css" type="text/css" media="screen" title="no title" charset="utf-8">		
+			<link rel="stylesheet" href="../static/css/index.css" type="text/css" media="screen" title="no title" charset="utf-8">
 	 	{% endblock %}
 		<!-- Date: 2012-06-13 -->
 	</head>
@@ -39,8 +39,8 @@
 		<div id="content" class="container-fluid">
 			{% block content %} {% endblock %}
 		</div>
-		<div id="footer" class="navbar">
+		<!--div id="footer" class="navbar">
 			<p> a better way to manage your video playlists </p>
-		</div>
+		</div->
 	</body>
 </html>

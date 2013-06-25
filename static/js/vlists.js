@@ -97,6 +97,7 @@ function show_settings() {
 // click on queue calls this
 function show_queue() {
     if (localStorage['queue'] == null) {
+        $('.queue_list').empty();
         $('.queue_list').append('<p>You have not added any video to the queue yet</p>');
     } else {
         var queue_list = JSON.parse(localStorage['queue']);
@@ -421,7 +422,8 @@ $(function () {
 // adding YouTube controls
 $(function () {
     var tag = document.createElement('script');
-    tag.src = "//www.youtube.com/iframe_api";
+//    tag.src = "//www.youtube.com/iframe_api";
+    tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 });
@@ -442,7 +444,9 @@ function onYouTubeIframeAPIReady() {
 // playing video in left pane
 function play_video(id) {
     //noinspection JSUnresolvedFunction
-    youtube_player.loadVideoById(id, 0);
+    if (youtube_player) {
+      youtube_player.loadVideoById(id, 0);
+    }
 }
 
 function onPlayerReady() {
