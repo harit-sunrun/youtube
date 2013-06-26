@@ -442,12 +442,14 @@ function play_video(id) {
 
 function onYouTubePlayerReady(playerId) {
   youtube_player = document.getElementById("myytplayer");
+  youtube_player.addEventListener("onStateChange", "onytplayerStateChange");
 //  console.log('player ready');
 }
 
 // when video is finished playing, what next video to play?
-function onPlayerStateChange(event) {
-  if(event.data == 0) {
+function onytplayerStateChange(event) {
+  console.log('player state change - ', event);
+  if(event == 0) {
     var id = get_next_video_id();
     if(id == -1) {
       // repeat = 0, reset video_index
