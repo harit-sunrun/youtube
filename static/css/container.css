@@ -112,7 +112,7 @@
     height: 651px;
 }
 
-#play, #previous, #next, #shuffle, #repeat {
+#play, #previous, #next, #shuffle, #repeat, #clear-queue {
     margin-top: 3%;
     font-size: 20px;
 }
@@ -121,6 +121,19 @@
     display: none;
 }
 
-#clear_queue {
-    margin-top: 10%;
+#repeat {
+    width: 3em;
+}
+
+.player_controls {
+    margin-right: 2em;
+}
+
+.player_control_button {
+    padding: 0.7em;
+}
+
+.player_control_button:hover {
+    cursor: hand;
+    cursor: pointer;
 }
