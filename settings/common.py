@@ -56,7 +56,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/hhimanshu/IdeaProjects/vlists/static',
+    '/Users/harith/IdeaProjects/vlists/static',
 )
 
 # List of finder classes that know how to find static files in
@@ -102,7 +102,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'vlists.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -111,7 +111,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	'vlists',
+	# 'vlists',
 	'apps.playlists',
 	'apps.videos',
 	'apps.accounts',
