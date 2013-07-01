@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 
 {% block title %}
-	Vlists - experience the difference
+    Vlists - experience the difference
 {% endblock %}
 
 {% block javascript %}
-	{{ block.super }}
+    {{ block.super }}
     <script type="text/javascript" src="/static/js/swfobject.js"></script>
     <script type="text/javascript" src="/static/js/vlists.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap-dropdown.js"></script>
-	<script type="text/javascript" src="/static/js/bootstrap-alert.js"></script>
-	<script type="text/javascript" src="/static/js/bootstrap-modal.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-alert.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
 {% endblock %}
 
 {% block css %}
-	{{ block.super }}
-	<link rel="stylesheet" href="/static/css/container.css" type="text/css" media="screen" title="no title" charset="utf-8">
-    <link rel="stylesheet" href="../static/css/zocial.css" type="text/css" media="screen" title="no title" charset="utf-8">
-	<link rel="stylesheet" href="/static/css/font-awesome.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    {{ block.super }}
+    <link rel="stylesheet" href="/static/css/container.css" type="text/css" media="screen" title="no title"
+          charset="utf-8">
+    <link rel="stylesheet" href="../static/css/zocial.css" type="text/css" media="screen" title="no title"
+          charset="utf-8">
+    <link rel="stylesheet" href="/static/css/font-awesome.css" type="text/css" media="screen" title="no title"
+          charset="utf-8">
 {% endblock %}
 
 {% block content %}
@@ -26,38 +29,38 @@
         <div id="ytapiplayer">
             You need Flash player 8+ and JavaScript enabled to view this video.
         </div>
-	</div>
+    </div>
 
-	<div id="navigator" class="tabbable navigator-class">
-		<ul class="nav nav-pills nav-stacked">
-		  <li>
-			<a id="search" class="btn btn-large navigator-button navigator-icons">
-				<i class="icon-search icon-large"></i>
-			    search
-			</a>
-		  </li>
-		  <li>
-			<a id="playlist" class="btn btn-large navigator-button navigator-icons">
-			    <i class="icon-list icon-large"></i>
-				playlists
-			</a>
-		  </li>
-		  <!--li>
-			<a id="settings" class="btn btn-large navigator-button navigator-icons">
-			  	<i class="icon-cog icon-large"></i>
-                settings
-            </a>
-		  </li-->
-          <li>
-              <a id="queue" class="btn btn-large navigator-button navigator-icons">
-                  <i class="icon-cog icon-play-circle"></i>
-                  queue
+    <div id="navigator" class="tabbable navigator-class">
+        <ul class="nav nav-pills nav-stacked">
+            <li>
+                <a id="search" class="btn btn-large navigator-button navigator-icons">
+                    <i class="icon-search icon-large"></i>
+                    search
+                </a>
+            </li>
+            <li>
+                <a id="playlist" class="btn btn-large navigator-button navigator-icons">
+                    <i class="icon-list icon-large"></i>
+                    playlists
+                </a>
+            </li>
+            <!--li>
+              <a id="settings" class="btn btn-large navigator-button navigator-icons">
+                    <i class="icon-cog icon-large"></i>
+                  settings
               </a>
-          </li>
-		</ul>
-	</div>
+            </li-->
+            <li>
+                <a id="queue" class="btn btn-large navigator-button navigator-icons">
+                    <i class="icon-cog icon-play-circle"></i>
+                    queue
+                </a>
+            </li>
+        </ul>
+    </div>
 
-	<div id="feature" class="feature">
+    <div id="feature" class="feature">
         <div id="search_page">
             <div class="search">
                 <div class="">
@@ -67,10 +70,11 @@
                 <div id="result">
                     <div class="hide-item item" id="item">
                         <div style="float:left">
-                            <img class="thumbnail" src="" alt="" />
+                            <img class="thumbnail" src="" alt=""/>
                         </div>
                         <div class="video-detail">
                             <p class="title"></p>
+
                             <p class="views"></p>
                         </div>
 
@@ -85,7 +89,9 @@
                                     <li>
                                         <form class="new-playlist form-inline" onclick="event.stopPropagation()">
                                             <input id="new_playlist_text" type="text" class="input-small">
-                                            <button class="btn btn-danger create-playlist-button" type="submit" disabled="disabled">New</button>
+                                            <button class="btn btn-danger create-playlist-button" type="submit"
+                                                    disabled="disabled">New
+                                            </button>
                                         </form>
                                     </li>
                                     <li class="divider"></li>
@@ -109,39 +115,32 @@
         <div id="setting_page">settings</div>
         <div id="queue_page">
             <div class="queue">
-                <div class="navbar">
-                    <div class="navbar-inner player_controls">
-                        <ul class="nav">
-                            <li id="previous" class="#"><a href="#"><i class="icon-backward icon-small"></i></a></li>
-                            <li id="play"><a href="#"><i class="icon-play icon-small"></i></a></li>
-                            <li id="next"><a href="#"><i class="icon-forward icon-small"></i></a></li>
-                            <li id="shuffle"><a href="#"><i class="icon-random icon-small"></i></a></li>
-                            <li id="repeat">
-                                <a href="#">
-                                    <i class="icon-refresh icon-small"></i><span class="badge badge-info repeat-badge">1</span>
-                                </a>
-                            </li>
-                            <li>
-                                <button class="btn btn-danger" type="button" id="clear_queue">Clear Queue</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <span id="previous"><i class="icon-backward icon-large"></i></span>
+                <span id="play"><i class="icon-play icon-large"></i></span>
+                <span id="next"><i class="icon-forward icon-large"></i></span>
+                <span id="shuffle"><i class="icon-random icon-large"></i></span>
+                <span id="clear_queue"><i class="icon-ban-circle icon-large"></i></span>
+                <span id="repeat">
+                     <i class="icon-refresh icon-large"></i>
+                     <span class="badge badge-info repeat-badge">1</span>
+                </span>
+            </div>
 
-                <div class="queue_list">
-                    <!--p>your localStorage data will be displayed here</p-->
-                    <div class="queue_item hide-item">
-                        <img class="thumbnail" />
-                        <p class="title"></p>
-                    </div>
+            <div class="queue_list">
+                <!--p>your localStorage data will be displayed here</p-->
+                <div class="queue_item hide-item">
+                    <img class="thumbnail"/>
+
+                    <p class="title"></p>
                 </div>
             </div>
         </div>
-	</div>
+    </div>
     <!-- Modal body -->
     <div id="sign_in_modal" class="modal hide fade in">
         <div class="modal-header">
             <a class="close" data-dismiss="modal">×</a>
+
             <p>Please sign-in to use this feature</p>
         </div>
         <!--div class="modal-body">

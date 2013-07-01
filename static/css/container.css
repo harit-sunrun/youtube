@@ -1,13 +1,17 @@
+#content {
+    background-color: #002F2F;
+}
+
 .feature {
-	margin-left: 760px;
-	background-color: #e6e600;
+    margin-left: 760px;
+    background-color: #e6e600;
 }
 
 #navigator {
-	width: 120px;
-	float: left;
-/*	background-color: #cccc00;*/
-	background-color: white;
+    width: 120px;
+    float: left;
+    /*	background-color: #cccc00;*/
+    background-color: #002F2F;
 }
 
 #search-input {
@@ -20,24 +24,24 @@
 }
 
 #player {
-	width: 640px;
-	float: left;
-	background-color: #b3b300;
+    width: 640px;
+    float: left;
+    background-color: #b3b300;
 }
 
 #video {
-	margin-top: 20px;
-	text-align: center;
+    margin-top: 20px;
+    text-align: center;
 }
 
 #feature, #navigator, #player {
-	height: 700px;
+    height: 700px;
 }
 
 #result {
-	display: none;
-	height: 651px;
-	overflow: scroll;
+    display: none;
+    height: 651px;
+    overflow: scroll;
 }
 
 /*#video-detail {
@@ -45,60 +49,60 @@
 }
 */
 .tab-style {
-	width: 150px;
-	height: 42px;
-	background-color: #ffff00;
+    width: 150px;
+    height: 42px;
+    background-color: #ffff00;
 }
 
 .position-list-in-button {
-	margin-top: 1%;
+    margin-top: 1%;
 }
 
 .navigator-icons {
-	font-size: 15px;
+    font-size: 15px;
 }
 
 .navigator-class {
-	margin-top: 5%;
+    margin-top: 5%;
 }
 
 .navigator-button {
-	border: none;
+    border: none;
 }
 
 .hide-item {
-	display: none;
+    display: none;
 }
 
 .view-item {
-	display: block;
-	height: 120px;
-	margin-left: 1%;
+    display: block;
+    height: 120px;
+    margin-left: 1%;
 }
 
 .icon-in-button {
-	margin-top: 2%;
+    margin-top: 2%;
 }
 
 .dropdown-menu {
-	width: 162px;
+    width: 162px;
 }
 
 .new-playlist {
-	margin-top: 3%;
-	margin-left: 3%;
-	margin-bottom: 3%;
+    margin-top: 3%;
+    margin-left: 3%;
+    margin-bottom: 3%;
 }
 
 .playlist, .video {
-	height: 70px;
-	background-color: #e8e8b5;
-	font-size: 20px;
-	padding-top: 6%;
+    height: 70px;
+    background-color: #e8e8b5;
+    font-size: 20px;
+    padding-top: 6%;
 }
 
 .playlist .icon-chevron-right {
-	padding-top: 1.6%;
+    padding-top: 1.6%;
 }
 
 .player_controls {
@@ -112,7 +116,7 @@
     height: 651px;
 }
 
-#play, #previous, #next, #shuffle, #repeat, #clear-queue {
+#play, #previous, #next, #shuffle, #repeat, #clear_queue {
     margin-top: 3%;
     font-size: 20px;
 }
@@ -133,7 +137,16 @@
     padding: 0.7em;
 }
 
-.player_control_button:hover {
+.queue {
+    padding-left: 12em;
+    padding-top: 1em;
+}
+
+.queue span {
+    margin: 0.5em;
+}
+
+.queue span:hover {
     cursor: hand;
     cursor: pointer;
 }

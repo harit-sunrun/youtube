@@ -30,10 +30,11 @@ $(function() {
 
   // some extra things
   // 1. always focus on search box
-  tidy_search_box()
+  tidy_search_box();
 
   // 2. clear the current queue
   $('#clear_queue').click(function() {
+    console.log('will clear queue');
     localStorage.removeItem('queue');
     $('.queue_list .view-item').remove();
     reset_current_video_queue();
@@ -100,7 +101,7 @@ function show_settings() {
 function show_queue() {
   if(localStorage['queue'] == null) {
     $('.queue_list').empty();
-    $('.queue_list').append('<p>You have not added any video to the queue yet</p>');
+    $('.queue_list').append('<p>You have not added any video to the queue yet</p>').css('padding', '10');
   }
   else {
     var queue_list = JSON.parse(localStorage['queue']);
@@ -430,7 +431,7 @@ $(function() {
   var params = { allowScriptAccess: "always" };
   var atts = { id: "myytplayer" };
   swfobject.embedSWF("http://www.youtube.com/v/M7lc1UVf-VE?enablejsapi=1&playerapiid=ytplayer&version=3",
-    "ytapiplayer", "640", "390", "8", null, null, params, atts);
+    "ytapiplayer", "640", "700", "8", null, null, params, atts);
 
 });
 
