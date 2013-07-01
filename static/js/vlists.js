@@ -34,7 +34,6 @@ $(function() {
 
   // 2. clear the current queue
   $('#clear_queue').click(function() {
-    console.log('will clear queue');
     localStorage.removeItem('queue');
     $('.queue_list .view-item').remove();
     reset_current_video_queue();
