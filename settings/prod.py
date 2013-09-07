@@ -10,8 +10,8 @@ DATABASES = {
         'NAME': 'vlists',                      # Or path to database file if using sqlite3.
         'USER': 'admin5qem9d8',                      # Not used with sqlite3.
         'PASSWORD': 'aV9KG3iJzeRQ',                  # Not used with sqlite3.
-        'HOST': '$OPENSHIFT_POSTGRESQL_DB_HOST',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '$OPENSHIFT_POSTGRESQL_DB_PORT',                      # Set to empty string for default. Not used with sqlite3.
+        'HOST': os.environ['OPENSHIFT_POSTGRESQL_DB_HOST'],                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': os.environ['OPENSHIFT_POSTGRESQL_DB_PORT'],                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
