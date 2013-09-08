@@ -17,13 +17,11 @@ DATABASES = {
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
-print 'project path' + PROJECT_PATH
-
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-	'templates',
+	'/var/lib/openshift/51d9d4d3e0b8cd1e6d0000fd/app-root/runtime/repo/templates',
 	# PROJECT_PATH + '/templates/',
 )
 
