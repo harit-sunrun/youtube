@@ -73,6 +73,8 @@ SOCIAL_AUTH_PIPELINE = (
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
+STATIC_ROOT = '/var/lib/openshift/51d9d4d3e0b8cd1e6d0000fd/app-root/runtime/repo/static'
+
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
